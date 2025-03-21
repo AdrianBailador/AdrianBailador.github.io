@@ -85,7 +85,7 @@ export const SOCIALS: Socials = [
   },
   { 
     NAME: "Dev.to",
-    ICON: "Dev.to",
+    ICON: "devto",
     TEXT: "adrianbailador-dev",
     HREF: "https://dev.to/adrianbailador",
   },
