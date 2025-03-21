@@ -1,15 +1,16 @@
 ---
-title: "Project Two"
-summary: "Lorem ipsum dolor sit amet"
-date: "Mar 17 2022"
+title: "Wedding App"
+summary: "Wedding App Adrian & Ana"
+date: "Oct 12 2024"
 draft: false
 tags:
-- Svelte
-- Sveltekit
+- Next js
+- Javascript
 - Typescript
 - Tailwind
+- Css
+demoUrl: https://adrianyana.com/en
+repoUrl: https://github.com/AdrianBailador/wedding-app
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+After a few wonderful weeks 💒 , I'm happy to present the official website of my wedding https://adrianyana.com/en. I'm incredibly grateful for his effort, dedication and patience throughout this project. It was quite a challenge, as we both learned a new technology, Next.js, from scratch, which brought a lot of obstacles along the way. But, step by step, we overcame each one of them. We will keep improving the site and adding new features, we hope you like it!

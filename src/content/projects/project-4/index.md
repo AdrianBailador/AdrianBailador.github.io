@@ -1,31 +1,86 @@
 ---
-title: "Project Four"
-summary: "Lorem ipsum dolor sit amet"
-date: "Mar 15 2022"
+title: "Design Patterns"
+summary: "This repository contains a Visual Studio Code solution for implementing various design patterns in C# using .NET Core. Each design pattern is implemented in a separate console project within the solution."
+date: "Apr 30 2024"
 draft: false
 tags:
-- React
-- Javascript
-- StyleX
+- C#
+- .Net
+repoUrl: https://github.com/AdrianBailador/DesignPatterns
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. 
 
-Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. 
+# Design Patterns
 
-Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. 
-Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+This repository contains a Visual Studio Code solution for implementing various design patterns in C# using .NET Core. Each design pattern is implemented in a separate console project within the solution.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. 
+## Project Structure
 
-Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. 
+The repository is organized as follows:
 
-Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. 
-Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+```
+DesignPatternsSolution/
+│
+├── SingletonPattern/
+│   ├── Program.cs
+│   └── ...
+│
+├── FactoryPattern/
+│   ├── Program.cs
+│   └── ...
+│
+├── BuilderPattern/
+│   ├── Program.cs
+│   └── ...
+│
+├── ...
+```
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. 
+Each folder represents a design pattern and contains a console project that implements that specific pattern.
 
-Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. 
+## How to Run
 
-Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. 
-Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+1. Open a terminal and navigate to the directory of the project you want to run. For example, to run the Singleton pattern:
+
+```bash
+cd /path/to/project/DesignPatternsSolution/SingletonPattern
+```
+
+2. Build the project using the `dotnet build` command:
+
+```bash
+dotnet build
+```
+
+3. Once built, run the program using the `dotnet run` command:
+
+```bash
+dotnet run
+```
+
+This command will build the project if necessary and then execute the application.
+
+If you want to run a specific project instead of all projects in the solution, you can specify the project name after the `dotnet run` command. For example:
+
+```bash
+dotnet run --project SingletonPattern
+```
+
+This will run only the `SingletonPattern` project. Replace `SingletonPattern` with the name of the project you want to run.
+
+## Implemented Design Patterns
+
+1. Singleton
+2. Factory
+3. Builder
+4. Dependency Injection
+5. Adapter
+6. Decorator
+7. Facade
+8. Bridge
+9. Observer
+10. Command
+11. Strategy
+
+Each design pattern is implemented in its own project and contains code examples demonstrating its usage.
+
