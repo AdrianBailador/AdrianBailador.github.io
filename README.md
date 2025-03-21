@@ -1,4 +1,4 @@
-![Astro Sphere Lighthouse Score](_astrosphere.jpg)
+![Astro Sphere Lighthouse Score](_adrian.jpg)
 
 Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on my personal website.
 
