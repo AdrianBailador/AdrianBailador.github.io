@@ -1,0 +1,217 @@
+---
+title: "Top 12 Best PracticesTop 12 Best Practices for REST APIs using C# .NET"
+summary: "Designing a good RESTful API remains a crucial part of modern application development. With the rise of mobile applications, distributed architectures, and microservices, creating APIs that are easy to use, efficient, and secure is more important than ever. This article will explore 12 best practices for building REST APIs, focusing on C# .NET."
+date: "Jan 11 2025"
+draft: false
+tags:
+- C#
+- .Net
+- Rest Api
+---
+
+#### Introduction
+
+Designing a good RESTful API remains a crucial part of modern application development. With the rise of mobile applications, distributed architectures, and microservices, creating APIs that are easy to use, efficient, and secure is more important than ever. This article will explore 12 best practices for building REST APIs, focusing on C# .NET. 
+
+#### 1. Proper Use of HTTP Methods
+
+Each HTTP method has a specific purpose:
+- **GET**: Retrieve information without causing side effects.
+- **POST**: Create new resources.
+- **PUT**: Update existing resources or create them if they don’t exist.
+- **DELETE**: Remove resources.
+- **PATCH**: Apply partial updates to a resource.
+
+**Example in C# .NET:**
+
+```csharp
+[HttpGet("{id}")]
+public IActionResult GetUser(int id)
+{
+    var user = _userService.GetUserById(id);
+    if (user == null)
+    {
+        return NotFound();
+    }
+    return Ok(user);
+}
+```
+
+#### 2. Use Clear Resource Naming Conventions
+
+To make your API routes easy to understand:
+- Use plural nouns for collections (`/users`).
+- Use singular nouns for individual items (`/users/{id}`).
+- Avoid using verbs in routes (e.g., instead of `/getUser`, use `/users/{id}`).
+
+**Recommended Link:** [Best Practices for RESTful API Design](https://www.oreilly.com/library/view/restful-web-services/9780596529260/ch04.html)
+
+#### 3. Keep Your API Stateless
+
+Each request sent to the server should contain all the information necessary to process it. Avoid relying on server-side state between requests. If you need to maintain state, use tokens like JWT or unique identifiers sent from the client.
+
+#### 4. Use Appropriate HTTP Status Codes
+
+HTTP status codes help clients understand what happened with their request:
+- **200 OK**: The request was successful.
+- **201 Created**: A resource was successfully created.
+- **400 Bad Request**: The request contains errors.
+- **404 Not Found**: The resource was not found.
+- **500 Internal Server Error**: Something went wrong on the server.
+
+**Example in C# .NET:**
+
+```csharp
+[HttpPost]
+public IActionResult CreateUser([FromBody] UserDto userDto)
+{
+    if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
+    var createdUser = _userService.CreateUser(userDto);
+    return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, createdUser);
+}
+```
+
+#### 5. Let the Client Choose the Response Format
+
+Allow clients to specify the response format using the `Accept` header.
+- **JSON**: The most popular format.
+- **XML**: For older systems that still require it.
+
+In ASP.NET Core, you can configure this as follows:
+
+```csharp
+services.AddControllers(options => options.RespectBrowserAcceptHeader = true)
+        .AddXmlSerializerFormatters();
+```
+
+#### 6. Implement Versioning
+
+Versioning helps maintain backward compatibility when making changes to your API:
+- Use paths like `/api/v1/users`.
+- Use query strings like `/api/users?version=1`.
+- Use HTTP headers like `Accept: application/vnd.myapi.v1+json`.
+
+**Learn more:** [API Versioning in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/web-api/)
+
+#### 7. Keep Your API Secure
+
+Ensure your API is protected with authentication and authorisation:
+- **OAuth2 or JWT** for secure access.
+- Configure **CORS** to control who can access your API.
+
+**Example in C# .NET (JWT):**
+
+```csharp
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = Configuration["Jwt:Issuer"],
+            ValidAudience = Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+        };
+    });
+```
+
+Configuring **CORS** is also essential:
+
+```csharp
+services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("https://example.com")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+```
+
+#### 8. Handle Errors Clearly
+
+Provide meaningful error messages that help developers understand what went wrong:
+- Use a consistent format for error messages.
+- Include helpful information like codes and clear descriptions.
+
+**Example in C# .NET:**
+
+```csharp
+app.UseExceptionHandler("/error");
+
+[Route("/error")]
+public IActionResult HandleError()
+{
+    var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
+    var exception = context?.Error;
+    var problemDetails = new ProblemDetails
+    {
+        Status = 500,
+        Title = "An error occurred while processing your request",
+        Detail = exception?.Message
+    };
+    return StatusCode(500, problemDetails);
+}
+```
+
+#### 9. Improve Performance with Caching
+
+Caching can reduce server load and speed up responses for clients:
+- Use HTTP headers like `Cache-Control` and `ETag`.
+
+**Example in C# .NET:**
+
+```csharp
+[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+public IActionResult GetCachedData()
+{
+    return Ok(_dataService.GetData());
+}
+```
+
+#### 10. Implement Rate Limiting
+
+To prevent abuse, implement rate limiting:
+- Return a `429 Too Many Requests` code when the limit is exceeded.
+- Provide information about the limits in response headers.
+
+**Learn more:** [Rate Limiting in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/performance/rate-limit)
+
+#### 11. Document Your API with Swagger
+
+Swagger allows you to create interactive documentation that makes it easier for others to understand and use your API:
+- Automatically generate documentation from your controllers and models.
+
+**Example in C# .NET:**
+
+```csharp
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Codú API", Version = "v1" });
+});
+```
+
+#### 12. Test Your API
+
+Testing is key to ensuring your API works as expected:
+- Write unit tests for controllers and services.
+- Implement integration tests to validate the entire workflow.
+
+**Example in C# .NET (Unit Testing):**
+
+```csharp
+[Fact]
+public void GetUser_ShouldReturnOkResult()
+{
+    var controller = new UsersController(_userService);
+    var result = controller.GetUser(1);
+    Assert.IsType<OkObjectResult>(result);
+}
+```
