@@ -1,6 +1,6 @@
 ---
 title: "Privacy Policy"
-date: "21/03/2025"
+date: "21-03-2025"
 ---
 
 **Privacy Policy**
