@@ -4,7 +4,7 @@ export type Page = {
 }
 
 export interface Site extends Page {
-  AUTHOR: string
+  //AUTHOR: string
 }
 
 export type Links = {
