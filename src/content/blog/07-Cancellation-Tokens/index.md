@@ -1,6 +1,6 @@
 ---
 title: "CancellationToken in .NET: What Are They and Why Should You Use Them?"
-summary: "f you work with .NET and asynchronous tasks, you've probably encountered the need to cancel an ongoing operation. This is where Cancellation Tokens (CancellationToken) come into play, a crucial tool for improving performance and responsiveness in your applications. When dealing with long-running tasks like database queries, HTTP requests, or CPU-intensive processes, it’s important to be able to stop them if they’re no longer necessary. This prevents wasting resources and makes your application more efficient."
+summary: "If you work with .NET and asynchronous tasks, you've probably encountered the need to cancel an ongoing operation. This is where Cancellation Tokens (CancellationToken) come into play, a crucial tool for improving performance and responsiveness in your applications. When dealing with long-running tasks like database queries, HTTP requests, or CPU-intensive processes, it’s important to be able to stop them if they’re no longer necessary. This prevents wasting resources and makes your application more efficient."
 date: "March 22 2025"
 draft: false
 tags:
