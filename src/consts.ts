@@ -3,7 +3,8 @@ import type { Site, Page, Links, Socials } from "@types"
 // Global
 export const SITE: Site = {
   TITLE: "Adrian Bailador | .NET ",
-  DESCRIPTION: "Welcome to my portfolio and blog about software engineering, coding and technology. Talk about .NET, C#, Azure, Visual Studio, and a bit of Next.js."
+  DESCRIPTION: "Welcome to my portfolio and blog about software engineering, coding and technology. Talk about .NET, C#, Azure, Visual Studio, and a bit of Next.js.",
+  AUTHOR: "Adrian Bailador Panero",
 }
 
 // Work Page
