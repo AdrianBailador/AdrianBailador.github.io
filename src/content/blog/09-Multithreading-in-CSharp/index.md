@@ -7,6 +7,7 @@ tags:
 - .Net
 - C#
 - .Net Core
+- Multithreading
 
 ---
 ![Multithreading in C#](multi.png)
