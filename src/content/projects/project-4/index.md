@@ -5,7 +5,7 @@ date: "Apr 30 2024"
 draft: false
 tags:
 - C#
-- .Net
+- .NET
 repoUrl: https://github.com/AdrianBailador/DesignPatterns
 ---
 

@@ -4,9 +4,9 @@ summary: "Multithreading in C# might sound intimidating at first, but once you g
 date: "April 15 2025"
 draft: false
 tags:
-- .Net
+- .NET
 - C#
-- .Net Core
+- .NET Core
 - Multithreading
 
 ---

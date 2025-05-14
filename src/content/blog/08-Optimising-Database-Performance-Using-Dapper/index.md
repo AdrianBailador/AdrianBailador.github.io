@@ -4,9 +4,9 @@ summary: "Dapper is a lightweight micro-ORM for .NET that offers high-speed data
 date: "March 27 2025"
 draft: false
 tags:
-- .Net
+- .NET
 - C#
-- .Net Core
+- .NET Core
 - SQL
 - Dapper
 - Database

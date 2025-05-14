@@ -4,9 +4,9 @@ summary: "If you work with .NET and asynchronous tasks, you've probably encounte
 date: "March 22 2025"
 draft: false
 tags:
-- .Net
+- .NET
 - C#
-- .Net Core
+- .NET Core
 ---
 
 
