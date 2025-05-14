@@ -2,7 +2,7 @@
 title: "How to Secure Your .NET Applications"
 summary: "Security is one of the most critical aspects of modern application development. In an era where data breaches and cyber threats are increasingly common, securing your .NET applications is not optional – it’s essential. This guide covers practical strategies and tools you can apply right now to make your applications safer and more resilient."
 date: "2025-04-19"
-tags: ["security", ".NET", "aspnetcore", "authentication", "authorization"]
+tags: ["Security", ".NET", ".NET Core", "Authentication", "Authorization"]
 ---
 
 ![How to Secure Your .NET Applications](secure.png)

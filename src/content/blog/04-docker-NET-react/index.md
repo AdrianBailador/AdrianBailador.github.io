@@ -5,7 +5,7 @@ date: "Feb 04 2024"
 draft: false
 tags:
 - C#
-- .Net
+- .NET
 - React
 - Docker
 ---

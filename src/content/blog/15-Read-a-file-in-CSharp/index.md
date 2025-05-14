@@ -2,7 +2,7 @@
 title: "How to Read a File in C#: Quick and Efficient Methods"
 summary: "Reading files is a fundamental skill in C#, and knowing the right method can improve both performance and readability. This article explores various ways to read text files, from the simplest to the most efficient, with practical code examples and guidance."
 date: "2025-05-11"
-tags: ["ASP.NET Core", ".NET", "CSharp"]
+tags: ["ASP.NET Core", ".NET", "C#"]
 ---
 ![Read](read.png)
 

@@ -5,7 +5,7 @@ date: "Jul 29 2023"
 draft: false
 tags:
 - C#
-- .Net
+- .NET
 repoUrl: https://github.com/AdrianBailador/AlgorithmsCSharp
 ---
 

@@ -4,9 +4,9 @@ summary: "In this article, we’ll explore 9 ways to set the URLs for your ASP.N
 date: "JAN 20 2025"
 draft: false
 tags:
-- .Net
+- .NET
 - C#
-- .Net Core
+- .NET Core
 ---
 
 #### Introduction

@@ -5,7 +5,7 @@ date: "JAN 24 2024"
 draft: false
 tags:
 - C#
-- .Net
+- .NET
 ---
 
 

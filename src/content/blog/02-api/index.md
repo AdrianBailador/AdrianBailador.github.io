@@ -5,7 +5,7 @@ date: "May 03 2024"
 draft: false
 tags:
 - C#
-- .Net
+- .NET
 - Rest Api
 - SOAP
 ---
