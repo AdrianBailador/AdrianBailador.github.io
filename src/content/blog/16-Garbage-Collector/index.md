@@ -2,7 +2,7 @@
 title: "Reducing Garbage Collector (GC) Pressure in .NET: Practical Patterns and Tools"
 summary: "Learn how to reduce GC pressure in your .NET applications using structs, ArrayPool<T>, and smart memory patterns."
 date: "2025-05-14"
-tags: [".Net", "Performance", "GC", "Memory", "Arraypool"]
+tags: [".NET", "Performance", "GC", "Memory", "Arraypool"]
 
 ---
 

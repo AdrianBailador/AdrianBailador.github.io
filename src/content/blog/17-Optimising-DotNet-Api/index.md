@@ -2,7 +2,7 @@
 title: "Optimising ASP.NET Core APIs for Speed and Efficiency. Practical techniques to reduce latency, CPU usage, and memory allocations"
 summary: "Building a working API is one thing — building a *fast and efficient* API is another. As your application scales or handles more users, performance becomes a critical concern."
 date: "2025-05-17"
-tags: [".Net", "Performance", "Memory", "API"]
+tags: [".NET", "Performance", "Memory", "API"]
 
 ---
 
