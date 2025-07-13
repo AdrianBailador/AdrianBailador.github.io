@@ -1,5 +1,4 @@
 ---
-import AIWidget from '@components/AIWidget.astro'
 import { SITE, LINKS } from "@consts"
 import { cn } from "@lib/utils"
 const { pathname } = Astro.url
@@ -20,9 +19,7 @@ import Container from "@components/Container.astro"
           </div>
         </a>
       </div>
-
-      <AIWidget />
-
+   
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
       <nav class="hidden md:flex items-center justify-center text-sm gap-1">
         {
