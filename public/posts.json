@@ -1,0 +1,127 @@
+[
+  {
+    "titulo": "9 Ways to Set the URLs for an ASP.NET Core App",
+    "resumen": "In this article, we’ll explore 9 ways to set the URLs for your ASP.NET Core app, with practical examples to help you decide which method suits your needs.",
+    "url": "/blog/01-9-Ways-to-Set-the-URLs-for-an-ASP.NET"
+  },
+  {
+    "titulo": "Rest API in C#",
+    "resumen": "In C#, there are two main options for creating APIs: SOAP (Simple Object Access Protocol) and REST (Representational State Transfer).",
+    "url": "/blog/02-api"
+  },
+  {
+    "titulo": "Asynchrony in Programming with Async/Await",
+    "resumen": "Asynchrony is an essential tool in modern programming, designed to enhance the efficiency and responsiveness of applications.",
+    "url": "/blog/03-Asynchrony is an essential tool in modern programming, designed to enhance the efficiency and responsiveness of applications."
+  },
+  {
+    "titulo": "Installing Docker in .NET 8 and React Projects",
+    "resumen": "Installation and configuration of docker for Dotnet 8 and React, I have also added some commands that will help us.",
+    "url": "/blog/04-docker-NET-react"
+  },
+  {
+    "titulo": "Uploading Images in Next.js (File Uploads, Filestack)",
+    "resumen": "Uploading images in Next.js is a common task when developing web applications.",
+    "url": "/blog/06-Uploading-images-mext"
+  },
+  {
+    "titulo": "CancellationToken in .NET: What Are They and Why Should You Use Them?",
+    "resumen": "If you work with .NET and asynchronous tasks, you've probably encountered the need to cancel an ongoing operation. This is where Cancellation Tokens (CancellationToken) come into play, a crucial tool for improving performance and responsiveness in your applications. When dealing with long-running tasks like database queries, HTTP requests, or CPU-intensive processes, it’s important to be able to stop them if they’re no longer necessary. This prevents wasting resources and makes your application more efficient.",
+    "url": "/blog/07-Cancellation-Tokens"
+  },
+  {
+    "titulo": "Optimising Database Performance Using Dapper",
+    "resumen": "Dapper is a lightweight micro-ORM for .NET that offers high-speed data access while keeping things simple. Unlike full-fledged ORMs like Entity Framework, Dapper focuses on raw SQL execution with minimal overhead. If you're working on an application where performance matters, Dapper can be a great choice.",
+    "url": "/blog/08-Optimising-Database-Performance-Using-Dapper"
+  },
+  {
+    "titulo": "Multithreading in C#",
+    "resumen": "Multithreading in C# might sound intimidating at first, but once you get the hang of it, it becomes a superpower for writing responsive, efficient, and modern applications. Whether you're building a UI that shouldn't freeze or handling heavy background work in a backend service, multithreading can help.",
+    "url": "/blog/09-Multithreading-in-CSharp"
+  },
+  {
+    "titulo": "How to Secure Your .NET Applications",
+    "resumen": "Security is one of the most critical aspects of modern application development. In an era where data breaches and cyber threats are increasingly common, securing your .NET applications is not optional – it’s essential. This guide covers practical strategies and tools you can apply right now to make your applications safer and more resilient.",
+    "url": "/blog/10-How-to-Secure-Your-NET-Applications"
+  },
+  {
+    "titulo": "What’s New in C# 14: More Power, Less Code",
+    "resumen": "The .NET ecosystem keeps evolving, and with the release of C# 14 alongside .NET 10, developers now have a fresh set of features that make the language even more expressive, concise, and powerful. In this post, I’ll walk you through the key improvements in this new version, with clear and practical examples.",
+    "url": "/blog/11-CSharp14"
+  },
+  {
+    "titulo": "Create an API in .NET with MongoDB and Pagination",
+    "resumen": "Learn how to build a RESTful API using .NET and MongoDB, with a focus on implementing pagination to efficiently manage large datasets.",
+    "url": "/blog/12-MongoDB-Pagination-Dotnet"
+  },
+  {
+    "titulo": "How to Add Multiple Languages to Your ASP.NET Core Application (Step-by-Step Localization Guide)",
+    "resumen": "Learn how to add localization support to your ASP.NET Core application, enabling multiple languages and culture-specific features.",
+    "url": "/blog/13-Localisation-Guide"
+  },
+  {
+    "titulo": "Background Tasks in C# 🧵",
+    "resumen": "In modern applications, especially web and desktop apps, executing long-running tasks on the main thread can block user interactions or degrade performance. That’s where background tasks come in.",
+    "url": "/blog/14-Background-Tasks-CSharp"
+  },
+  {
+    "titulo": "How to Read a File in C#: Quick and Efficient Methods",
+    "resumen": "Reading files is a fundamental skill in C#, and knowing the right method can improve both performance and readability. This article explores various ways to read text files, from the simplest to the most efficient, with practical code examples and guidance.",
+    "url": "/blog/15-Read-a-file-in-CSharp"
+  },
+  {
+    "titulo": "Reducing Garbage Collector (GC) Pressure in .NET: Practical Patterns and Tools",
+    "resumen": "Learn how to reduce GC pressure in your .NET applications using structs, ArrayPool<T>, and smart memory patterns.",
+    "url": "/blog/16-Garbage-Collector"
+  },
+  {
+    "titulo": "Optimising ASP.NET Core APIs for Speed and Efficiency. Practical techniques to reduce latency, CPU usage, and memory allocations",
+    "resumen": "Building a working API is one thing — building a *fast and efficient* API is another. As your application scales or handles more users, performance becomes a critical concern.",
+    "url": "/blog/17-Optimising-DotNet-Api"
+  },
+  {
+    "titulo": "Understanding the Cost of Abstractions in .NET",
+    "resumen": "Abstractions make our code elegant and modular — but they're not free. In this article, we explore how some common abstractions in .NET can hurt performance if used carelessly, and how to avoid the hidden costs.",
+    "url": "/blog/18-Understanding-the-Cost-of-Abstractions"
+  },
+  {
+    "titulo": "Store Encrypted Data in Your Database Using .NET – Secure and Efficient",
+    "resumen": "Protecting sensitive data is a critical requirement in any modern application. Whether it’s personal information, passwords, or API keys, we must ensure that stored data isn’t left in plain text in case of a breach.",
+    "url": "/blog/19-Store-Encrypted-Data"
+  },
+  {
+    "titulo": "MVVM in .NET",
+    "resumen": "MVVM is a powerful architectural pattern used in .NET desktop applications like WPF, MAUI, and WinUI. In this article, we break down the pattern with a practical example, a diagram, its pros and cons, and step-by-step instructions to build it in Visual Studio Code.",
+    "url": "/blog/20-MVVM"
+  },
+  {
+    "titulo": "Avoiding Indexed Access in .NET: Safer and Faster Alternatives for Production Code",
+    "resumen": "Accessing elements by index is fast but risky in production .NET code. Learn safer and more expressive alternatives to avoid runtime exceptions, fragile logic, and unclear intent. Includes benchmarks, real-world examples, and a diagram.",
+    "url": "/blog/21-Avoiding-Indexed-Access"
+  },
+  {
+    "titulo": "Core-Driven Architecture: Structuring Business Logic for Maintainable and Scalable .NET Applications",
+    "resumen": "Explore Core-Driven Architecture to keep your business domain isolated and clean. Learn how to build maintainable, scalable, and testable .NET applications by focusing on core business logic and clear separation of concerns.",
+    "url": "/blog/22-Core-Driven"
+  },
+  {
+    "titulo": "How to Store Secrets Securely in .NET: Environment Variables, AppSettings, User Secrets and More",
+    "resumen": "Learn the best practices to handle secrets in .NET applications using environment variables, user secrets, configuration files, and Azure Key Vault. Keep your credentials safe and your architecture clean.",
+    "url": "/blog/23-Store-Secrets-DotNet"
+  },
+  {
+    "titulo": "How to Measure and Improve Performance in .NET",
+    "resumen": "A practical guide to diagnosing and optimising .NET applications in real-world environments. Learn what to measure, which tools to use, and the best practices for making .NET applications faster, more predictable, and more resilient.",
+    "url": "/blog/24-Improve-Performance-in-.NET"
+  },
+  {
+    "titulo": "DDD in .NET: Modelling Rich and Meaningful Domains",
+    "resumen": "Learn how to apply Domain-Driven Design in .NET to create expressive, maintainable, and business-focused domain models. Includes practical examples with Value Objects, Aggregates, Repositories, and tests.",
+    "url": "/blog/25-DDD"
+  },
+  {
+    "titulo": "Detecting Missing Migrations in EF Core: A Guide for .NET Developers",
+    "resumen": "Avoid database drift and deployment surprises by learning how to detect and prevent missing migrations in Entity Framework Core. Includes automated checks, runtime guards, and CI-friendly scripts.",
+    "url": "/blog/26 - Detecting-Missing-Migrations-in-EF-Core"
+  }
+]
