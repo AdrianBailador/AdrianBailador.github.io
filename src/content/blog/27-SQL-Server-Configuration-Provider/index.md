@@ -1,10 +1,8 @@
 ---
-
 title: "SQL Server as a Configuration Provider in .NET Core"
 summary: "Learn how to use a SQL Server database as a configuration source in ASP.NET Core. This guide covers custom providers, dynamic reload support, and best practices for secure, scalable config management."
 date: "2025-07-21"
 tags: [".NET", "Configuration", "ASP.NET Core", "SQL Server", "Architecture", "Dependency Injection", "IConfiguration"]
-
 ---
 
 ![SQL Server as a Configuration Provider in .NET Core – by Adrián Bailador Panero](ConfigurationProvider.png)
