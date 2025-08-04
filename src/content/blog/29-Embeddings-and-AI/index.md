@@ -31,7 +31,7 @@ A minimal REST API with two endpoints:
 | GET    | `/search?q=`  | Searches for documents similar to the input query using AI     |
 
 Technologies used:
-- ✅ ASP.NET Core Minimal APIs  
+- ✅ .NET Core Minimal APIs  
 - ✅ SQLite (with Dapper)  
 - ✅ OpenAI embeddings (via HTTP)  
 - ✅ No frontend — pure backend logic
@@ -74,7 +74,7 @@ Using `curl`:
 ```bash
 curl -X POST http://localhost:5000/documents \
   -H "Content-Type: application/json" \
-  -d '{"title": "ASP.NET Guide", "content": "ASP.NET Core is a powerful web framework..."}'
+  -d '{"title": .NET Guide", "content": ".NET Core is a powerful web framework..."}'
 ```
 
 Or with **Postman**:
@@ -85,8 +85,8 @@ Or with **Postman**:
 
 ```json
 {
-  "title": "ASP.NET Guide",
-  "content": "ASP.NET Core is a powerful web framework..."
+  "title": ".NET Guide",
+  "content": ".NET Core is a powerful web framework..."
 }
 ```
 
@@ -101,8 +101,8 @@ Example response:
 ```json
 [
   {
-    "title": "ASP.NET Guide",
-    "content": "ASP.NET Core is a powerful web framework...",
+    "title": ".NET Guide",
+    "content": ".NET Core is a powerful web framework...",
     "score": 0.91
   }
 ]
@@ -120,7 +120,7 @@ The `EmbeddingService` sends your content to OpenAI's API:
 POST https://api.openai.com/v1/embeddings
 {
   "model": "text-embedding-ada-002",
-  "input": "ASP.NET Core is a powerful framework..."
+  "input": ".NET Core is a powerful framework..."
 }
 ```
 
