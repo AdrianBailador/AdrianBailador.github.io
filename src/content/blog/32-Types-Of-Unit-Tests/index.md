@@ -9,8 +9,6 @@ tags: ["C#", ".NET", "Unit Testing", "TDD", "xUnit", "NUnit", "Moq", "Testing", 
 
 ---
 
-# Complete Guide: Types of Unit Tests for C# Developers
-
 If you're a C# developer looking to improve your code quality, unit tests are your best mate. In this guide, I'll walk you through all the types you need to know, with practical examples you can use straight away.
 
 ## What Are Unit Tests?
