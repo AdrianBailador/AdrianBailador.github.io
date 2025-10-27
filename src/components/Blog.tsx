@@ -69,7 +69,7 @@ export default function Blog({ data, tags }: Props) {
   }
 
   function clearAllFilters() {
-    setFilter(new Set())
+    setFilter(new Set<string>())
     setSearchQuery("")
   }
 
@@ -114,9 +114,7 @@ export default function Blog({ data, tags }: Props) {
                   class="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-black/10 dark:hover:bg-white/20 rounded"
                   aria-label="Clear search"
                 >
-                  <svg class="size-4 fill-black/50 dark:fill-white/50">
-                    <use href={`/ui.svg#x`} />
-                  </svg>
+                  ✕
                 </button>
               </Show>
             </div>
@@ -198,9 +196,7 @@ export default function Blog({ data, tags }: Props) {
               class="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-black/10 dark:hover:bg-white/20 rounded"
               aria-label="Clear search"
             >
-              <svg class="size-5 fill-black/50 dark:fill-white/50">
-                <use href={`/ui.svg#x`} />
-              </svg>
+              ✕
             </button>
           </Show>
         </div>
@@ -218,25 +214,14 @@ export default function Blog({ data, tags }: Props) {
           )}
         >
           <span class="flex items-center gap-2">
-            <svg class="size-5 fill-black dark:fill-white">
-              <use href={`/ui.svg#filter`} />
-            </svg>
-            Filter Tags
+            🔍 Filter Tags
             {filter().size > 0 && (
               <span class="ml-2 px-2 py-0.5 rounded-full bg-black dark:bg-white text-white dark:text-black text-xs font-bold">
                 {filter().size}
               </span>
             )}
           </span>
-          <svg 
-            class={cn(
-              "size-5 fill-black dark:fill-white",
-              "transition-transform duration-300",
-              isFilterOpen() && "rotate-180"
-            )}
-          >
-            <use href={`/ui.svg#chevron-down`} />
-          </svg>
+          <span class="text-lg">{isFilterOpen() ? "▲" : "▼"}</span>
         </button>
 
         <div class={cn(
