@@ -1,5 +1,5 @@
 ---
-title: "Task vs ValueTask in C#: The Definitive Guide to Choosing Correctly"
+title: "Task vs ValueTask in C#"
 summary: "A clear and practical guide to understanding Task vs ValueTask in .NET, with benchmarks, examples, rules of thumb, and real-world recommendations."
 date: "2025-11-15"
 tags: ["dotnet", "csharp", "async", "performance", "valuetask"]
