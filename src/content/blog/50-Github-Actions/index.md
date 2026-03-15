@@ -5,7 +5,7 @@ date: "2026-03-15"
 tags: ["dotnet", "csharp", "devops", "github-actions", "cicd", "docker", "azure", "testing"]
 ---
 
-![GitHub Actions for .NET: Build, Test, and Deploy Your API – by Adrian Bailador Panero](Github.png)
+![GitHub Actions for .NET: Build, Test, and Deploy Your API – by Adrian Bailador Panero](Actions.png)
 
 A complete guide to CI/CD for .NET developers — automated builds, test runs, Docker images, and deployments to Azure using GitHub Actions from scratch.
 
