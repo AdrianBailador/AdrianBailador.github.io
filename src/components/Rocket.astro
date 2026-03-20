@@ -1,0 +1,59 @@
+---
+/**
+ * Rocket.astro
+ * 🚀 entra por la izquierda y sale por la derecha en diagonal.
+ * position:fixed en body para evitar cualquier clipping.
+ */
+---
+
+<script is:inline>
+  function launchRocket() {
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+
+    const startY = H * 0.6 + Math.random() * H * 0.3;  // 60%–90% de altura
+    const endY   = H * 0.05 + Math.random() * H * 0.2; // 5%–25% de altura
+
+    const dx = W + 120;
+    const dy = endY - startY; // negativo, sube
+
+    const el = document.createElement("div");
+    el.textContent = "🚀";
+    el.style.cssText = `
+      position: fixed;
+      font-size: 2.5rem;
+      left: -60px;
+      top: ${startY}px;
+      pointer-events: none;
+      user-select: none;
+      z-index: 9999;
+      filter: drop-shadow(0 0 8px rgba(251,191,36,0.7));
+    `;
+
+    document.body.appendChild(el);
+
+    el.animate(
+      [
+        { opacity: 0, transform: `translate(0px, 0px)` },
+        { opacity: 1, transform: `translate(0px, 0px)`,          offset: 0.04 },
+        { opacity: 1, transform: `translate(${dx}px, ${dy}px)`,  offset: 0.96 },
+        { opacity: 0, transform: `translate(${dx}px, ${dy}px)` },
+      ],
+      { duration: 10000, easing: "linear", fill: "forwards" }
+    );
+
+    setTimeout(() => el.remove(), 10500);
+  }
+
+  function scheduleNext() {
+    setTimeout(() => {
+      launchRocket();
+      scheduleNext();
+    }, 20000 + Math.random() * 10000);
+  }
+
+  setTimeout(() => {
+    launchRocket();
+    scheduleNext();
+  }, 4000 + Math.random() * 4000);
+</script>
