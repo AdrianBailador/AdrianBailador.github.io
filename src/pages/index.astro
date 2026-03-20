@@ -6,6 +6,7 @@ import StackCard from "@components/StackCard.astro"
 import { SITE, SOCIALS } from "@consts"
 import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
+import Rocket from "@components/Rocket.astro"
 
 const posts = (await getCollection("blog"))
   .filter(post => !post.data.draft)
@@ -62,6 +63,7 @@ const stack = [
     <div class="hidden dark:block">
       <TwinklingStars/>
       <MeteorShower/>
+      <Rocket/>
     </div>
   </div>
 

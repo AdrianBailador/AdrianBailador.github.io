@@ -1,196 +1,227 @@
 <style>
-    #openAIWidget {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background-color: #2d2d30;
-      color: #e1e1e1;
-      padding: 14px 18px;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: background-color 0.2s;
-    }
-    #openAIWidget:hover {
-      background-color: #3a3a3f;
-    }
-  
-    #aiModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 1001;
-    }
-    #aiModal.active {
-      display: block;
-    }
-  
-    #aiModalContent {
-      background: #1e1e1e;
-      color: #e1e1e1;
-      max-width: 520px;
-      margin: 8% auto;
-      padding: 24px;
-      border-radius: 12px;
-      position: relative;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
-    }
-  
-    #aiModalContent h2 {
-      text-align: center;
-      font-size: 1.6rem;
-      font-weight: 600;
-      margin-bottom: 18px;
-      color: #ffffff;
-      letter-spacing: 0.4px;
-    }
-  
-    #aiModalContent input,
-    #aiModalContent button {
-      border-radius: 6px;
-      border: 1px solid #333;
-    }
-  
-    #aiModalContent input {
-      background: #2d2d30;
-      color: #fff;
-      padding: 8px;
-      width: 100%;
-      margin-top: 8px;
-    }
-  
-    #aiModalContent button {
-      margin-top: 12px;
-      padding: 10px 14px;
-      background: #007acc;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    #aiModalContent button:hover {
-      background: #005fa3;
-    }
-  
-    #aiResponse {
-      background: #1a1a1a;
-      padding: 12px;
-      margin-top: 16px;
-      max-height: 240px;
-      overflow-y: auto;
-      border: 1px solid #333;
-      white-space: pre-wrap;
-    }
-  
-    #closeModal {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: transparent;
-      color: #888;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      padding: 2px;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-    #closeModal:hover {
-      color: #fff;
-    }
-  </style>
-  
-  <button id="openAIWidget" aria-label="Open AI assistant">🤖 Ask something</button>
-  
-  <div id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiTitle" aria-hidden="true">
-    <div id="aiModalContent">
-      <button id="closeModal" aria-label="Close assistant">&times;</button>
-      <h2 id="aiTitle">🤖 Blog Assistant</h2>
-  
-      <label for="apiKey">OpenAI API Key:</label>
-      <input id="apiKey" type="password" placeholder="sk-…" autocomplete="off" />
-  
-      <label for="userQuery" style="margin-top:10px;">What are you looking for?</label>
-      <input id="userQuery" type="text" placeholder="e.g. Dotnet, Dapper, ..." />
-  
-      <button id="askAI">🔍 Search</button>
-  
-      <pre id="aiResponse" aria-live="polite" aria-atomic="true"></pre>
+  #aiWidgetBtn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #1e1e2e;
+    color: #e1e1e1;
+    padding: 12px 18px;
+    border-radius: 9999px;
+    border: 1px solid #333;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    transition: background 0.2s, transform 0.15s;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #aiWidgetBtn:hover { background: #2a2a3e; transform: scale(1.04); }
+
+  #aiModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 1001;
+    backdrop-filter: blur(4px);
+  }
+  #aiModal.active { display: flex; align-items: center; justify-content: center; }
+
+  #aiModalContent {
+    background: #1a1a2e;
+    color: #e1e1e1;
+    width: min(540px, 92vw);
+    padding: 28px;
+    border-radius: 16px;
+    position: relative;
+    border: 1px solid #2a2a4a;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  }
+
+  #aiModalContent h2 {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+
+  #queryWrap {
+    display: flex;
+    gap: 10px;
+  }
+  #userQuery {
+    flex: 1;
+    background: #252540;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #userQuery:focus { border-color: #7c9ef8; }
+
+  #askBtn {
+    padding: 10px 18px;
+    background: #4f6ef7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    white-space: nowrap;
+  }
+  #askBtn:hover:not(:disabled) { background: #3a57d4; }
+  #askBtn:disabled { opacity: 0.5; cursor: default; }
+
+  #aiResponse {
+    background: #111128;
+    padding: 14px;
+    margin-top: 16px;
+    max-height: 260px;
+    overflow-y: auto;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: none;
+  }
+  #aiResponse.visible { display: block; }
+  #aiResponse a {
+    color: #7c9ef8;
+    text-decoration: underline;
+    word-break: break-all;
+  }
+  #aiResponse a:hover { color: #a8bfff; }
+
+  #closeModal {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: transparent;
+    color: #666;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  #closeModal:hover { color: #fff; }
+
+  .ai-spinner {
+    display: inline-block;
+    width: 13px; height: 13px;
+    border: 2px solid #ffffff44;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<button id="aiWidgetBtn" aria-label="Open AI assistant">✨ Ask something</button>
+
+<div id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiTitle">
+  <div id="aiModalContent">
+    <button id="closeModal" aria-label="Close">&times;</button>
+    <h2 id="aiTitle">✨ Blog Assistant</h2>
+
+    <div id="queryWrap">
+      <input
+        id="userQuery"
+        type="text"
+        placeholder="e.g. async programming, Docker, C#…"
+        autocomplete="off"
+      />
+      <button id="askBtn">Search</button>
     </div>
+
+    <div id="aiResponse" aria-live="polite"></div>
   </div>
-  
-  
-  <script is:inline>
+</div>
+
+<script is:inline>
+  // ⚠️ Replace with your Cloudflare Worker URL after deploying
+  const WORKER_URL = "https://blog-ai-assistant.adrianbailador.workers.dev";
+
+  function linkify(text) {
+    // 1. Convert markdown links [label](url) → <a>
+    let result = text.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (_, label, url) =>
+      `<a href="${url}" target="_blank" rel="noopener">${label}</a>`
+    );
+    // 2. Convert bare URLs (not already inside an href), strip trailing punctuation
+    result = result.replace(/(?<!href=")(https?:\/\/[^\s<>"']+)/g, url => {
+      const clean = url.replace(/[).,!?]+$/, "");
+      return `<a href="${clean}" target="_blank" rel="noopener">${clean}</a>`;
+    });
+    // 3. Preserve line breaks
+    result = result.replace(/\n/g, "<br>");
+    return result;
+  }
+
+  (function () {
     let posts = [];
-    window.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const res = await fetch('/posts.json');
-        posts = await res.json();
-      } catch (e) {
-        console.error('Failed to load posts.json:', e);
-      }
-    });
-  
-    const openBtn = document.getElementById("openAIWidget");
-    const modal = document.getElementById("aiModal");
-    const closeBtn = document.getElementById("closeModal");
-    const askBtn = document.getElementById("askAI");
-    const apiKeyInput = document.getElementById("apiKey");
-    const userQueryInput = document.getElementById("userQuery");
+    fetch("/posts.json").then(r => r.json()).then(d => { posts = d; }).catch(() => {});
+
+    const widgetBtn   = document.getElementById("aiWidgetBtn");
+    const modal       = document.getElementById("aiModal");
+    const closeBtn    = document.getElementById("closeModal");
+    const askBtn      = document.getElementById("askBtn");
+    const queryInput  = document.getElementById("userQuery");
     const responseBox = document.getElementById("aiResponse");
-  
-    openBtn.addEventListener("click", () => {
-      modal.classList.add("active");
-      modal.setAttribute('aria-hidden', 'false');
-      userQueryInput.focus();
-    });
-  
-    closeBtn.addEventListener("click", () => {
+
+    function openModal()  { modal.classList.add("active"); queryInput.focus(); }
+    function closeModal() {
       modal.classList.remove("active");
-      modal.setAttribute('aria-hidden', 'true');
+      responseBox.classList.remove("visible");
       responseBox.textContent = "";
-      userQueryInput.value = "";
-    });
-  
+      queryInput.value = "";
+    }
+
+    widgetBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+    queryInput.addEventListener("keydown", e => { if (e.key === "Enter") askBtn.click(); });
+
     askBtn.addEventListener("click", async () => {
-      const apiKey = apiKeyInput.value.trim();
-      const userInput = userQueryInput.value.trim();
-      if (!apiKey || !userInput) return alert("Enter both API key and your question.");
-  
-      responseBox.textContent = "Thinking…";
-  
-      const prompt = `You’re a helpful assistant for the blog of Adrián Bailador. User wants to find a relevant post. Here are available posts:\n\n` +
-        posts.map(p => `- "${p.titulo}": ${p.resumen} (${location.origin}${p.url})`).join("\n") +
-        `\n\nUser query: "${userInput}"\n\nReply with the best matching post recommendation. Be concise and friendly.`;
-  
+      const query = queryInput.value.trim();
+      if (!query) { queryInput.focus(); return; }
+
+      askBtn.disabled = true;
+      askBtn.innerHTML = '<span class="ai-spinner"></span>';
+      responseBox.classList.remove("visible");
+      responseBox.textContent = "";
+
       try {
-        const res = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST", headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: prompt }],
-            temperature: 0.7
-          })
+        const res = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query, posts }),
         });
-  
-        if (!res.ok) {
-          const err = await res.json();
-          responseBox.textContent = `Error ${res.status}: ${err.error.message}`;
-          return;
-        }
-  
+
         const data = await res.json();
-        responseBox.textContent = data.choices?.[0]?.message?.content || "No answer received.";
+
+        if (!res.ok) {
+          responseBox.textContent = "❌ " + (data.error || `Error ${res.status}`);
+        } else {
+          responseBox.innerHTML = linkify(data.answer);
+        }
+        responseBox.classList.add("visible");
+
       } catch (err) {
-        responseBox.textContent = "Error calling API: " + err.message;
+        responseBox.textContent = "❌ Network error: " + err.message;
+        responseBox.classList.add("visible");
+      } finally {
+        askBtn.disabled = false;
+        askBtn.innerHTML = "Search";
       }
     });
-  </script>
-  
+  })();
+</script>
