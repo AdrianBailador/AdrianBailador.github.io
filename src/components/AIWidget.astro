@@ -95,11 +95,24 @@
   }
   #aiResponse.visible { display: block; }
   #aiResponse a {
-    color: #7c9ef8;
-    text-decoration: underline;
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: #2a2a5a;
+    color: #a8bfff;
+    border: 1px solid #4a5aaf;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
     word-break: break-all;
+    transition: background 0.2s, color 0.2s;
   }
-  #aiResponse a:hover { color: #a8bfff; }
+  #aiResponse a:hover {
+    background: #3a3a7a;
+    color: #fff;
+    border-color: #7c9ef8;
+  }
 
   #closeModal {
     position: absolute;
