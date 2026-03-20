@@ -164,17 +164,38 @@
   // ⚠️ Replace with your Cloudflare Worker URL after deploying
   const WORKER_URL = "https://blog-ai-assistant.adrianbailador.workers.dev";
 
+  const linkStyle = `
+    display:inline-block;
+    margin:8px 4px 0;
+    padding:6px 14px;
+    background:#2a2a5a;
+    color:#a8bfff;
+    border:1px solid #4a5aaf;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:0.85rem;
+    font-weight:500;
+    word-break:break-all;
+  `.replace(/\s+/g, " ").trim();
+
+  const linkHover = `onmouseover="this.style.background='#3a3a7a';this.style.color='#fff';this.style.borderColor='#7c9ef8'"
+    onmouseout="this.style.background='#2a2a5a';this.style.color='#a8bfff';this.style.borderColor='#4a5aaf'"`;
+
+  function makeLink(url, label) {
+    return `<a href="${url}" target="_blank" rel="noopener" style="${linkStyle}" ${linkHover}>${label}</a>`;
+  }
+
   function linkify(text) {
-    // 1. Convert markdown links [label](url) → <a>
-    let result = text.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (_, label, url) =>
-      `<a href="${url}" target="_blank" rel="noopener">${label}</a>`
+    // 1. Markdown links [label](url)
+    let result = text.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+      (_, label, url) => makeLink(url, label)
     );
-    // 2. Convert bare URLs (not already inside an href), strip trailing punctuation
+    // 2. Bare URLs — strip trailing punctuation
     result = result.replace(/(?<!href=")(https?:\/\/[^\s<>"']+)/g, url => {
       const clean = url.replace(/[).,!?]+$/, "");
-      return `<a href="${clean}" target="_blank" rel="noopener">${clean}</a>`;
+      return makeLink(clean, clean);
     });
-    // 3. Preserve line breaks
+    // 3. Line breaks
     result = result.replace(/\n/g, "<br>");
     return result;
   }
