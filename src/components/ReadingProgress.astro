@@ -1,0 +1,36 @@
+---
+/**
+ * ReadingProgress.astro
+ * Fixed progress bar at the top that fills as the user scrolls the article.
+ */
+---
+
+<div id="reading-progress" aria-hidden="true"></div>
+
+<style>
+  #reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    z-index: 9999;
+    background: linear-gradient(90deg, #4f6ef7, #a78bfa, #60a5fa);
+    transition: width 0.1s linear;
+    pointer-events: none;
+  }
+</style>
+
+<script is:inline>
+  const bar = document.getElementById("reading-progress");
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = Math.min(progress, 100) + "%";
+  }
+
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  updateProgress();
+</script>
