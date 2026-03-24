@@ -9,12 +9,12 @@ export const GET: APIRoute = async () => {
     ...posts.map(p => ({
       titulo: p.data.title,
       resumen: p.data.summary,
-      url: `/blog/${p.slug.toLowerCase()}`,
+      url: `/blog/${p.id.toLowerCase()}`,
     })),
     ...projects.map(p => ({
       titulo: p.data.title,
       resumen: p.data.summary,
-      url: `/projects/${p.slug.toLowerCase()}`,
+      url: `/projects/${p.id.toLowerCase()}`,
     })),
   ].sort((a, b) => a.titulo.localeCompare(b.titulo))
 

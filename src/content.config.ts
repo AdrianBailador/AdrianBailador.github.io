@@ -1,9 +1,6 @@
 import { defineCollection, z } from "astro:content"
 import { glob } from "astro/loaders"
 
-const slugify = ({ entry }: { entry: string }) =>
-  entry.replace(/\/index\.(md|mdx)$/, "").replace(/\.(md|mdx)$/, "").toLowerCase()
-
 const work = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/work" }),
   schema: z.object({
@@ -15,7 +12,7 @@ const work = defineCollection({
 })
 
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog", generateId: slugify }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
@@ -26,7 +23,7 @@ const blog = defineCollection({
 })
 
 const projects = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects", generateId: slugify }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
