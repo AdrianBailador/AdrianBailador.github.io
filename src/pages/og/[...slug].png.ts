@@ -161,11 +161,11 @@ export const GET: APIRoute = async ({ props }) => {
                               type: "span",
                               props: {
                                 style: {
-                                  color: "rgba(255,255,255,0.25)",
+                                  color: "#a78bfa",
                                   fontSize: "20px",
-                                  fontWeight: 400,
+                                  fontWeight: 700,
                                 },
-                                children: "adrianbailador.github.io",
+                                children: "Read article →",
                               },
                             },
                           ],
