@@ -153,14 +153,13 @@ article img {
   @apply rotate-315;
 }
 
-.copy-cnt{
-  @apply absolute w-full;
-  top:var(--copy-btn-margin);
+.copy-wrapper {
+  position: relative;
 }
 .copy-btn {
-  @apply  w-[30px] fixed;
-  left:calc(100% - var(--copy-btn-margin));
-  transform: translateX(-100%);
+  @apply w-[30px] absolute;
+  top: var(--copy-btn-margin);
+  right: var(--copy-btn-margin);
 }
 
 .copy-svg {

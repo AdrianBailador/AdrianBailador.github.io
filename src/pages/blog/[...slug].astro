@@ -34,9 +34,12 @@ const { headings } = await render(post)
   <div class="flex-1 py-5">
     <div class="w-full h-full mx-auto px-5 max-w-screen-lg">
       <div class="animate grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-10">
-        <ArticleBottomLayout entry={post} />
+        <div>
+          <TableOfContents headings={headings} variant="mobile" />
+          <ArticleBottomLayout entry={post} />
+        </div>
         <aside class="hidden lg:block">
-          <TableOfContents headings={headings} />
+          <TableOfContents headings={headings} variant="desktop" />
         </aside>
       </div>
     </div>
