@@ -6,11 +6,12 @@ interface Props {
   description: string
   image?: string
   ogTitle?: string
+  ogType?: "website" | "article"
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
-const { title, description, image = "/adrian.jpg", ogTitle } = Astro.props
+const { title, description, image = "/adrian.jpg", ogTitle, ogType = "website" } = Astro.props
 
 // OG title: use raw article title if provided, otherwise strip the site suffix
 const resolvedOgTitle = ogTitle ?? title.replace(/\s*\|.*$/, "").trim()
@@ -39,7 +40,7 @@ const ogDescription = description.length > 155
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={resolvedOgTitle} />
 <meta property="og:description" content={ogDescription} />

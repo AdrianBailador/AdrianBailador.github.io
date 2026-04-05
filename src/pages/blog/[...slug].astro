@@ -24,7 +24,7 @@ const ogImage = `/og/${post.id}.png`
 const { headings } = await render(post)
 ---
 
-<PageLayout title={title} description={summary} image={ogImage}>
+<PageLayout title={title} description={summary} image={ogImage} ogType="article">
   <ReadingProgress />
   <TopLayout>
     <div class="animate">
