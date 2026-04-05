@@ -7,11 +7,12 @@ interface Props {
   image?: string
   ogTitle?: string
   ogType?: "website" | "article"
+  publishedTime?: Date
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
-const { title, description, image = "/adrian.jpg", ogTitle, ogType = "website" } = Astro.props
+const { title, description, image = "/adrian.jpg", ogTitle, ogType = "website", publishedTime } = Astro.props
 
 // OG title: use raw article title if provided, otherwise strip the site suffix
 const resolvedOgTitle = ogTitle ?? title.replace(/\s*\|.*$/, "").trim()
@@ -45,6 +46,7 @@ const ogDescription = description.length > 155
 <meta property="og:title" content={resolvedOgTitle} />
 <meta property="og:description" content={ogDescription} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
