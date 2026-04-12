@@ -574,4 +574,4 @@ The setup takes an hour. The payoff is every incident after that.
 
 ---
 
-*Questions? Found an issue with the examples? Open an issue on [GitHub](https://github.com/adrianbailador/adrianbailador.github.io).*
+*Questions? Found an issue with the examples? Open an issue on [GitHub](https://github.com/AdrianBailador/aspnetcore-health-checks-demo).*
