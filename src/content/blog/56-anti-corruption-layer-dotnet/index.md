@@ -5,7 +5,7 @@ date: "2026-04-26"
 tags: ["dotnet", "csharp", "ddd", "architecture", "aspnetcore", "patterns", "production"]
 ---
 
-![Anti-Corruption Layer in .NET: Protecting Your Domain from External APIs – by Adrian Bailador Panero](anti-corruption-layer.png)
+![Anti-Corruption Layer in .NET: Protecting Your Domain from External APIs – by Adrian Bailador Panero](anti-corruption-layer-dotnet.png)
 
 We had a clean domain. Orders, customers, payments — all modelled carefully, all speaking the same language. Then we integrated with a payment provider.
 
@@ -21,9 +21,7 @@ The term comes from Eric Evans' *Domain-Driven Design*. When two systems need to
 
 The Anti-Corruption Layer (ACL) is a translation boundary. It sits between your domain and the external system, converting the external model into your domain model — and vice versa. Your domain never sees the external types. The external system never sees your domain types.
 
-```
-Your Domain  ←→  Anti-Corruption Layer  ←→  External API
-```
+![Flowchart of the Anti-Corruption Layer](diagram.png)
 
 It's not just a mapper. It's an architectural boundary that says: *everything on this side speaks our language, everything on that side speaks theirs, and this layer translates between the two.*
 
