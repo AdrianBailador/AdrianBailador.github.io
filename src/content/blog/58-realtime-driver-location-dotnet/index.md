@@ -1,6 +1,6 @@
 ---
-title: "Real-time Driver Location Tracking in .NET: Redis GEO, Channels and SignalR"
-summary: "Uber processes millions of GPS updates every second. Here's how to build the same real-time location tracking pipeline in .NET — from driver updates to rider map — using Redis GEO, Channel<T> and SignalR."
+title: "Real-time Driver Location Tracking in .NET: Redis GEO, State Buffer and SignalR"
+summary: "Uber processes millions of GPS updates every second. Here's how to build the same real-time location tracking pipeline in .NET — from driver updates to rider map — using Redis GEO, a mutable state buffer and SignalR."
 date: "2026-05-11"
 tags: ["dotnet", "csharp", "redis", "signalr", "architecture", "production"]
 ---
@@ -29,8 +29,6 @@ A naive implementation stores each update in a SQL table. After two minutes of l
 The architecture we'll build instead:
 
 ![Architecture – by Adrian Bailador Panero](diagram.png)
-
-
 ## Step 1: Modelling the Location Update
 
 Keep it simple. A location update is a thin message:
@@ -132,8 +130,7 @@ public class RedisLocationStore
         var results = await _db.GeoSearchAsync(
             DriversKey,
             longitude, latitude,
-            radiusKm, GeoUnit.Kilometers,
-            order: Order.Ascending,
+            new GeoSearchCircle(radiusKm, GeoUnit.Kilometers),
             options: GeoRadiusOptions.WithDistance | GeoRadiusOptions.WithCoordinates);
 
         return results.Select(r => new NearbyDriver(
@@ -343,7 +340,7 @@ return Results.Ok();
 
 Redis is fast, but adding network I/O to every driver request serialises your throughput. The state buffer decouples the HTTP response time from the Redis write time — the driver gets `202` in microseconds and Redis catches up on the next flush tick.
 
-### Mistake 3b: Using a queue when you need mutable state
+### Mistake 3: Using a queue when you need mutable state
 
 ```csharp
 // ❌ Channel queues every update — processes stale positions
@@ -355,7 +352,7 @@ Channel.CreateBounded<LocationUpdate>(new BoundedChannelOptions(10_000)
 
 A queue with `DropOldest` drops unpredictably under load and processes intermediate positions that are already outdated by the time the consumer reaches them. Location tracking is a state problem, not a message-passing problem. Model it as state.
 
-### Mistake 3: One SignalR group per trip instead of per driver
+### Mistake 4: One SignalR group per trip instead of per driver
 
 ```csharp
 // ❌ Naming the group after the trip
@@ -364,7 +361,7 @@ await Groups.AddToGroupAsync(connectionId, $"trip:{tripId}");
 
 Trip IDs change across retries and reassignments. Driver IDs don't. Name the group after the driver and the rider joins/leaves as the assignment changes.
 
-### Mistake 4: Forgetting the backplane when scaling SignalR
+### Mistake 5: Forgetting the backplane when scaling SignalR
 
 ```csharp
 // ❌ Multiple instances, no backplane
@@ -377,9 +374,9 @@ This is the most common production bug in SignalR deployments. Everything works 
 
 ## Conclusion
 
-The location tracking pipeline is a good example of matching the data store to the access pattern. GPS updates are high-frequency, short-lived, and geospatial — Redis GEO handles all three properties natively. The Channel buffer absorbs spikes without back-pressuring the HTTP layer. SignalR delivers the update to the right rider in real time.
+The location tracking pipeline is a good example of matching the abstraction to the problem. GPS updates are high-frequency, short-lived, and geospatial — so we model them as mutable state (not a queue), index them in Redis GEO (not a relational table), and push changes in real time via SignalR (not polling).
 
-None of this required a heavy framework or a distributed systems PhD. It's a bounded channel, a Redis sorted set, and a WebSocket group — standard .NET primitives composed to handle a genuinely hard scale problem.
+None of this required a heavy framework or a distributed systems PhD. It's a `ConcurrentDictionary`, a Redis sorted set, and a WebSocket group — standard .NET primitives composed to handle a genuinely hard scale problem.
 
 In the next article we'll build the trip state machine: how a ride moves from `Requested` to `Completed`, how to handle concurrent state transitions, and how to persist the lifecycle with EF Core.
 
