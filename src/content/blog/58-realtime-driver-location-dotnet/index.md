@@ -45,46 +45,55 @@ public record LocationUpdate(
 
 The driver sends this every four seconds. We don't store history here — that's a separate concern for analytics. What we store is *current position*.
 
-## Step 2: The Channel Buffer
+## Step 2: The Location State Buffer
 
-The first thing the incoming request touches is not Redis. It's a `Channel<LocationUpdate>`.
+The first instinct here is to use a queue — `Channel<T>`, a message bus, something that holds updates until they can be processed. That instinct is wrong for this problem.
 
-`Channel<T>` is the .NET way to decouple producers from consumers without introducing a message broker. The driver endpoint writes to the channel and returns `202 Accepted` immediately — no waiting for Redis, no back-pressure on the HTTP layer. The consumer drains the channel asynchronously.
+A queue implies every item matters. In location tracking, only the *latest* position per driver matters. If a driver sends 10 updates while the processor is busy, 9 of them are noise — you only need the most recent. A queue retains all 10 and processes them in order; by the time it reaches update 10 it's processing history, not the present.
+
+The right model is mutable state per driver. A `ConcurrentDictionary<string, LocationUpdate>` where each write simply overwrites the previous value:
 
 ```csharp
-// Register a bounded channel — reject or block if the consumer falls behind
-builder.Services.AddSingleton(_ =>
-    Channel.CreateBounded<LocationUpdate>(new BoundedChannelOptions(10_000)
+public class LocationStateBuffer
+{
+    private readonly ConcurrentDictionary<string, LocationUpdate> _latest = new();
+    private readonly ConcurrentDictionary<string, byte> _dirty = new();
+
+    public void Update(LocationUpdate update)
     {
-        FullMode = BoundedChannelFullMode.DropOldest,
-        SingleWriter = false,
-        SingleReader = true
-    }));
+        _latest[update.DriverId] = update;
+        _dirty[update.DriverId] = 0;
+    }
+
+    public IReadOnlyList<LocationUpdate> TakeSnapshot()
+    {
+        var snapshot = new List<LocationUpdate>();
+        foreach (var driverId in _dirty.Keys.ToArray())
+        {
+            if (_dirty.TryRemove(driverId, out _) && _latest.TryGetValue(driverId, out var update))
+                snapshot.Add(update);
+        }
+        return snapshot;
+    }
+}
 ```
 
-`DropOldest` is intentional: if the consumer is overwhelmed, the oldest unprocessed updates are the least valuable anyway. A slightly stale position is better than a backed-up queue.
+The `_dirty` set tracks which drivers have sent updates since the last flush. `TakeSnapshot` returns only those drivers — if a driver hasn't moved, there's nothing to write to Redis. This means the flush is proportional to activity, not total driver count.
 
-The endpoint:
+The endpoint writes are O(1) and never block regardless of what the background processor is doing:
 
 ```csharp
-app.MapPost("/drivers/{driverId}/location", async (
+app.MapPost("/drivers/{driverId}/location", (
     string driverId,
     LocationUpdateRequest request,
-    ChannelWriter<LocationUpdate> writer,
-    CancellationToken ct) =>
+    LocationStateBuffer buffer) =>
 {
-    var update = new LocationUpdate(driverId, request.Latitude, request.Longitude, DateTimeOffset.UtcNow);
-
-    // Non-blocking write — if channel is full, DropOldest handles it
-    writer.TryWrite(update);
-
+    buffer.Update(new LocationUpdate(driverId, request.Latitude, request.Longitude, DateTimeOffset.UtcNow));
     return Results.Accepted();
 });
-
-public record LocationUpdateRequest(double Latitude, double Longitude);
 ```
 
-`TryWrite` never blocks. The driver client gets a `202` in microseconds regardless of what Redis is doing.
+No overflow. No stale updates blocking newer ones. Natural rate limiting built in — if a driver sends 10 updates between flushes, only 1 Redis write happens.
 
 ## Step 3: Redis GEO
 
@@ -144,60 +153,56 @@ One important note: Redis GEO stores positions as compressed floats, so there's 
 
 ## Step 4: The Background Processor
 
-The `IHostedService` that drains the channel and writes to Redis:
+The `BackgroundService` flushes the state buffer to Redis every 500ms using `PeriodicTimer`:
 
 ```csharp
 public class LocationProcessorService : BackgroundService
 {
-    private readonly ChannelReader<LocationUpdate> _reader;
-    private readonly RedisLocationStore _store;
+    private readonly LocationStateBuffer _buffer;
+    private readonly ILocationStore _store;
     private readonly IHubContext<DriverLocationHub> _hub;
     private readonly ILogger<LocationProcessorService> _logger;
 
-    public LocationProcessorService(
-        ChannelReader<LocationUpdate> reader,
-        RedisLocationStore store,
-        IHubContext<DriverLocationHub> hub,
-        ILogger<LocationProcessorService> logger)
-    {
-        _reader = reader;
-        _store = store;
-        _hub = hub;
-        _logger = logger;
-    }
+    private static readonly TimeSpan FlushInterval = TimeSpan.FromMilliseconds(500);
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await foreach (var update in _reader.ReadAllAsync(stoppingToken))
-        {
-            try
-            {
-                // 1. Persist to Redis GEO
-                await _store.UpdateAsync(update);
+        using var timer = new PeriodicTimer(FlushInterval);
 
-                // 2. Push to the rider watching this driver (if any)
-                await _hub.Clients
-                    .Group($"watching:{update.DriverId}")
-                    .SendAsync("DriverMoved", new
-                    {
-                        update.DriverId,
-                        update.Latitude,
-                        update.Longitude,
-                        update.Timestamp
-                    }, stoppingToken);
-            }
-            catch (Exception ex)
+        while (await timer.WaitForNextTickAsync(stoppingToken))
+        {
+            var updates = _buffer.TakeSnapshot();
+            if (updates.Count == 0) continue;
+
+            foreach (var update in updates)
             {
-                _logger.LogError(ex, "Failed processing location update for driver {DriverId}", update.DriverId);
+                try
+                {
+                    await _store.UpdateAsync(update);
+
+                    await _hub.Clients
+                        .Group($"watching:{update.DriverId}")
+                        .SendAsync("DriverMoved", new
+                        {
+                            update.DriverId,
+                            update.Latitude,
+                            update.Longitude,
+                            update.Timestamp
+                        }, stoppingToken);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed flushing location for driver {DriverId}", update.DriverId);
+                }
             }
         }
     }
 }
 ```
 
-`ReadAllAsync` is the idiomatic way to drain a channel in a hosted service — it blocks efficiently until an item is available and respects cancellation automatically when the app shuts down.
+`PeriodicTimer` is the idiomatic .NET 6+ way to run periodic work in a hosted service — it doesn't drift (each tick is measured from the previous tick's start, not end) and cancellation is handled automatically.
 
-The two operations inside the loop (Redis write + SignalR push) are independent. If the SignalR push fails, the Redis position is already updated — the rider UI recovers on the next update. If Redis fails, we log and continue — a single lost update is invisible to the user.
+Each flush only touches drivers that sent updates since the last tick. If no driver moved, `TakeSnapshot` returns an empty list and the loop skips immediately. The Redis write and SignalR push are independent — a failed push doesn't block the Redis update, and a single missed UI notification is invisible to the rider.
 
 ## Step 5: SignalR Hub
 
@@ -250,22 +255,14 @@ The `withAutomaticReconnect()` is critical: mobile connections drop constantly. 
 var builder = WebApplication.CreateBuilder(args);
 
 // Redis
-var redis = ConnectionMultiplexer.Connect(builder.Configuration["Redis:ConnectionString"]!);
+var redis = await ConnectionMultiplexer.ConnectAsync(builder.Configuration["Redis:ConnectionString"]!);
 builder.Services.AddSingleton<IConnectionMultiplexer>(redis);
-builder.Services.AddSingleton<RedisLocationStore>();
+builder.Services.AddSingleton<ILocationStore, RedisLocationStore>();
 
-// Channel
-builder.Services.AddSingleton(_ =>
-    Channel.CreateBounded<LocationUpdate>(new BoundedChannelOptions(10_000)
-    {
-        FullMode = BoundedChannelFullMode.DropOldest,
-        SingleWriter = false,
-        SingleReader = true
-    }));
-builder.Services.AddSingleton(sp => sp.GetRequiredService<Channel<LocationUpdate>>().Writer);
-builder.Services.AddSingleton(sp => sp.GetRequiredService<Channel<LocationUpdate>>().Reader);
+// Location state buffer — mutable per-driver state, flushed periodically
+builder.Services.AddSingleton<LocationStateBuffer>();
 
-// SignalR
+// SignalR — add .AddStackExchangeRedis(...) when scaling horizontally
 builder.Services.AddSignalR();
 
 // Background processor
@@ -273,12 +270,12 @@ builder.Services.AddHostedService<LocationProcessorService>();
 
 var app = builder.Build();
 
-app.MapPost("/drivers/{driverId}/location", async (
+app.MapPost("/drivers/{driverId}/location", (
     string driverId,
     LocationUpdateRequest request,
-    ChannelWriter<LocationUpdate> writer) =>
+    LocationStateBuffer buffer) =>
 {
-    writer.TryWrite(new LocationUpdate(driverId, request.Latitude, request.Longitude, DateTimeOffset.UtcNow));
+    buffer.Update(new LocationUpdate(driverId, request.Latitude, request.Longitude, DateTimeOffset.UtcNow));
     return Results.Accepted();
 });
 
@@ -286,7 +283,7 @@ app.MapHub<DriverLocationHub>("/hubs/driver-location");
 
 app.MapGet("/drivers/nearby", async (
     double lat, double lon, double radius,
-    RedisLocationStore store) =>
+    ILocationStore store) =>
 {
     var drivers = await store.FindNearbyAsync(lat, lon, radius);
     return Results.Ok(drivers);
@@ -308,19 +305,7 @@ builder.Services.AddSignalR()
 
 One line, and SignalR uses Redis pub/sub to fan out messages across all instances.
 
-**Channel becomes per-instance.** `Channel<T>` is in-memory — it doesn't survive restarts and doesn't span instances. For durability under restarts, replace the channel with Azure Service Bus or a Redis Stream. For most use cases the in-memory channel is fine: a few seconds of location updates lost during a deployment is not a user-visible problem.
-
-```csharp
-// Redis Streams alternative — survives restarts, supports consumer groups
-await _db.StreamAddAsync("driver:location:stream",
-    new NameValueEntry[]
-    {
-        new("driverId", update.DriverId),
-        new("lat", update.Latitude.ToString()),
-        new("lon", update.Longitude.ToString()),
-        new("ts", update.Timestamp.ToUnixTimeMilliseconds().ToString())
-    });
-```
+**The state buffer is per-instance.** `LocationStateBuffer` is in-memory — it doesn't survive restarts and doesn't span instances. For this use case that's fine: drivers resend their position every 4 seconds, so after a restart the buffer refills in seconds and no user-visible impact occurs.
 
 ## What Uber Actually Does
 
@@ -356,7 +341,19 @@ await _redis.GeoAddAsync(DriversKey, new GeoEntry(lon, lat, driverId));
 return Results.Ok();
 ```
 
-Redis is fast, but adding network I/O to every driver request serialises your throughput. The Channel pattern decouples the HTTP response time from the Redis write time — the driver gets `202` in microseconds and Redis catches up asynchronously.
+Redis is fast, but adding network I/O to every driver request serialises your throughput. The state buffer decouples the HTTP response time from the Redis write time — the driver gets `202` in microseconds and Redis catches up on the next flush tick.
+
+### Mistake 3b: Using a queue when you need mutable state
+
+```csharp
+// ❌ Channel queues every update — processes stale positions
+Channel.CreateBounded<LocationUpdate>(new BoundedChannelOptions(10_000)
+{
+    FullMode = BoundedChannelFullMode.DropOldest
+});
+```
+
+A queue with `DropOldest` drops unpredictably under load and processes intermediate positions that are already outdated by the time the consumer reaches them. Location tracking is a state problem, not a message-passing problem. Model it as state.
 
 ### Mistake 3: One SignalR group per trip instead of per driver
 
