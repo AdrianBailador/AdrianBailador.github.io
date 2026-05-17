@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from "astro:content"
+
+type Props = {
+  currentPost: CollectionEntry<"blog">
+  seriesPosts: CollectionEntry<"blog">[]
+}
+
+const { currentPost, seriesPosts } = Astro.props
+const seriesName = currentPost.data.series!
+---
+
+<div class="my-8 p-5 border border-black/15 dark:border-white/20 rounded-lg bg-black/[0.02] dark:bg-white/[0.02]">
+  <p class="text-xs font-semibold uppercase tracking-widest text-black/40 dark:text-white/40 mb-4">
+    Series — {seriesName}
+  </p>
+  <ol class="space-y-3">
+    {seriesPosts.map((post) => {
+      const isCurrent = post.id === currentPost.id
+      return (
+        <li class="flex items-start gap-3">
+          <span class:list={[
+            "shrink-0 mt-0.5 w-5 h-5 flex items-center justify-center rounded-full text-xs font-medium border",
+            isCurrent
+              ? "bg-black dark:bg-white text-white dark:text-black border-black dark:border-white"
+              : "border-black/20 dark:border-white/20 text-black/40 dark:text-white/40"
+          ]}>
+            {post.data.seriesPart}
+          </span>
+          {isCurrent ? (
+            <span class="text-sm font-medium text-black dark:text-white leading-snug">
+              {post.data.title}
+            </span>
+          ) : (
+            <a
+              href={`/blog/${post.id}`}
+              class="text-sm text-black/50 dark:text-white/50 hover:text-black hover:dark:text-white leading-snug blend"
+            >
+              {post.data.title}
+            </a>
+          )}
+        </li>
+      )
+    })}
+  </ol>
+</div>

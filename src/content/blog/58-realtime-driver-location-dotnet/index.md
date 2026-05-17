@@ -3,6 +3,8 @@ title: "Real-time Driver Location Tracking in .NET: Redis GEO, State Buffer and 
 summary: "Uber processes millions of GPS updates every second. Here's how to build the same real-time location tracking pipeline in .NET — from driver updates to rider map — using Redis GEO, a mutable state buffer and SignalR."
 date: "2026-05-11"
 tags: ["dotnet", "csharp", "redis", "signalr", "architecture", "production"]
+series: "Uber-like System Design in .NET"
+seriesPart: 1
 ---
 
 ![Real-time Driver Location Tracking in .NET – by Adrian Bailador Panero](realtime-driver-location.png)

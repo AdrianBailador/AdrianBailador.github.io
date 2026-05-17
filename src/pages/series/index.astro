@@ -1,0 +1,75 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import Container from "@components/Container.astro"
+
+const allPosts = (await getCollection("blog"))
+  .filter(p => !p.data.draft && p.data.series)
+  .sort((a, b) => (a.data.seriesPart ?? 0) - (b.data.seriesPart ?? 0))
+
+// Group by series name
+const seriesMap = allPosts.reduce((acc, post) => {
+  const name = post.data.series!
+  if (!acc[name]) acc[name] = []
+  acc[name].push(post)
+  return acc
+}, {} as Record<string, typeof allPosts>)
+
+const seriesList = Object.entries(seriesMap).sort(([a], [b]) => a.localeCompare(b))
+---
+
+<PageLayout title="Series" description="Collections of related articles on a single topic.">
+  <TopLayout>
+    <div class="animate">
+      <Container size="md">
+        <div class="space-y-1">
+          <h1 class="text-2xl font-semibold text-black dark:text-white">Series</h1>
+          <p class="text-black/60 dark:text-white/60">
+            Multi-part articles on a single topic, from start to finish.
+          </p>
+        </div>
+      </Container>
+    </div>
+  </TopLayout>
+
+  <BottomLayout>
+    <div class="animate">
+      <Container size="md">
+        <div class="space-y-10">
+          {seriesList.map(([name, posts]) => (
+            <div>
+              <h2 class="text-base font-semibold text-black dark:text-white mb-4">
+                {name}
+                <span class="ml-2 text-xs font-normal text-black/40 dark:text-white/40 uppercase tracking-widest">
+                  {posts.length} {posts.length === 1 ? "part" : "parts"}
+                </span>
+              </h2>
+              <ol class="space-y-3">
+                {posts.map(post => (
+                  <li class="flex items-start gap-3">
+                    <span class="shrink-0 mt-0.5 w-5 h-5 flex items-center justify-center rounded-full text-xs font-medium border border-black/20 dark:border-white/20 text-black/40 dark:text-white/40">
+                      {post.data.seriesPart}
+                    </span>
+                    <a
+                      href={`/blog/${post.id}`}
+                      class="group flex-1 p-3 border border-black/10 dark:border-white/15 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 blend"
+                    >
+                      <div class="text-sm font-medium text-black dark:text-white group-hover:text-black dark:group-hover:text-white blend">
+                        {post.data.title}
+                      </div>
+                      <div class="text-xs text-black/50 dark:text-white/50 mt-1 line-clamp-1">
+                        {post.data.summary}
+                      </div>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </div>
+  </BottomLayout>
+</PageLayout>
