@@ -6,6 +6,7 @@ import ArticleTopLayout from "@layouts/ArticleTopLayout.astro"
 import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
 import ReadingProgress from "@components/ReadingProgress.astro"
 import TableOfContents from "@components/TableOfContents.astro"
+import SeriesNav from "@components/SeriesNav.astro"
 
 // Create the static blog pages
 export async function getStaticPaths() {
@@ -22,6 +23,13 @@ const post = Astro.props
 const { title, summary, date } = post.data
 const ogImage = `/og/${post.id}.png`
 const { headings } = await render(post)
+
+// Load series posts if this article belongs to a series
+const seriesPosts = post.data.series
+  ? (await getCollection("blog"))
+      .filter(p => !p.data.draft && p.data.series === post.data.series)
+      .sort((a, b) => (a.data.seriesPart ?? 0) - (b.data.seriesPart ?? 0))
+  : []
 ---
 
 <PageLayout title={title} description={summary} image={ogImage} ogType="article" publishedTime={date}>
@@ -36,6 +44,9 @@ const { headings } = await render(post)
       <div class="animate grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-10">
         <div>
           <TableOfContents headings={headings} variant="mobile" />
+          {seriesPosts.length > 1 && (
+            <SeriesNav currentPost={post} seriesPosts={seriesPosts} />
+          )}
           <ArticleBottomLayout entry={post} />
         </div>
         <aside class="hidden lg:block">
