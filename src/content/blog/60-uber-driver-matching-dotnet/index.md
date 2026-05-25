@@ -1,7 +1,7 @@
 ---
 title: "Uber-like System in .NET: Driver Matching, Surge Pricing and the Complete Request Flow"
 summary: "We've built the location pipeline and the trip state machine. Now we connect them: find the nearest available driver, calculate surge pricing, and trace the full lifecycle from rider request to completed trip."
-date: "2026-05-22"
+date: "2026-05-25"
 tags: ["dotnet", "csharp", "redis", "efcore", "architecture", "production"]
 series: "Uber-like System Design in .NET"
 seriesPart: 3
