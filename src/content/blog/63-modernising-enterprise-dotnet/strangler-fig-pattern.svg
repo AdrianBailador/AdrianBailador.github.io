@@ -1,0 +1,58 @@
+<svg viewBox="0 0 1100 760" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="1100" height="760" fill="#ffffff"/>
+
+  <text x="40" y="46" font-size="24" font-weight="700" fill="#111111">Strangler Fig Pattern</text>
+  <text x="40" y="70" font-size="14" fill="#666666">Traffic shifts gradually from legacy to new — reversible at every step</text>
+
+  <!-- Client -->
+  <rect x="430" y="100" width="240" height="56" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.2"/>
+  <text x="550" y="134" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">Incoming Traffic</text>
+
+  <!-- arrow down to router -->
+  <line x1="550" y1="156" x2="550" y2="200" stroke="#111111" stroke-width="2"/>
+  <polygon points="550,210 543,196 557,196" fill="#111111"/>
+
+  <!-- Router -->
+  <rect x="380" y="212" width="340" height="60" rx="10" fill="#000000" fill-opacity="0.06" stroke="#000000" stroke-opacity="0.3"/>
+  <text x="550" y="240" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">Feature Flag / Router</text>
+  <text x="550" y="259" font-size="12" fill="#555555" text-anchor="middle">/api/v1/orders vs /api/v2/orders</text>
+
+  <!-- split arrows -->
+  <line x1="430" y1="272" x2="240" y2="340" stroke="#111111" stroke-width="2"/>
+  <polygon points="236,348 234,332 250,338" fill="#111111"/>
+  <text x="300" y="300" font-size="12" fill="#777777">decreasing %</text>
+
+  <line x1="670" y1="272" x2="860" y2="340" stroke="#111111" stroke-width="2"/>
+  <polygon points="864,348 850,338 866,332" fill="#111111"/>
+  <text x="800" y="300" font-size="12" fill="#777777">increasing %</text>
+
+  <!-- Legacy box -->
+  <rect x="80" y="350" width="320" height="90" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.15"/>
+  <text x="240" y="382" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">Legacy System</text>
+  <text x="240" y="402" font-size="12" fill="#555555" text-anchor="middle">Existing controller, unchanged code</text>
+  <text x="240" y="420" font-size="12" fill="#999999" text-anchor="middle">retired once confidence is established</text>
+
+  <!-- New box -->
+  <rect x="700" y="350" width="320" height="90" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.25"/>
+  <text x="860" y="382" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">New System</text>
+  <text x="860" y="402" font-size="12" fill="#555555" text-anchor="middle">Modern code: DI, async, validated</text>
+  <text x="860" y="420" font-size="12" fill="#999999" text-anchor="middle">grows as more traffic shifts here</text>
+
+  <!-- ACL between new and legacy -->
+  <line x1="700" y1="410" x2="560" y2="500" stroke="#111111" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="552,506 558,492 568,502" fill="#111111"/>
+
+  <rect x="400" y="500" width="320" height="68" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.2" stroke-dasharray="4,3"/>
+  <text x="560" y="530" font-size="14" font-weight="700" fill="#111111" text-anchor="middle">Anti-Corruption Layer</text>
+  <text x="560" y="550" font-size="12" fill="#555555" text-anchor="middle">translates legacy model for features not yet rebuilt</text>
+
+  <line x1="400" y1="534" x2="240" y2="440" stroke="#111111" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="236,432 248,440 234,448" fill="#111111"/>
+
+  <!-- Shared DB -->
+  <line x1="240" y1="440" x2="240" y2="660" stroke="#111111" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="3,3"/>
+  <line x1="860" y1="440" x2="860" y2="660" stroke="#111111" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="3,3"/>
+  <rect x="320" y="660" width="460" height="64" rx="10" fill="#000000" fill-opacity="0.05" stroke="#000000" stroke-opacity="0.3"/>
+  <text x="550" y="688" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">Shared Database</text>
+  <text x="550" y="708" font-size="12" fill="#777777" text-anchor="middle">a pragmatic, temporary compromise while migration is in progress</text>
+</svg>

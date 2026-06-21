@@ -1,0 +1,85 @@
+<svg viewBox="0 0 900 1280" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="900" height="1280" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="40" y="50" font-size="24" font-weight="700" fill="#111111">The Modernisation Roadmap</text>
+  <text x="40" y="76" font-size="14" fill="#666666">Eight phases, applied incrementally — not a rewrite</text>
+
+  <!-- vertical line -->
+  <line x1="60" y1="120" x2="60" y2="1220" stroke="#111111" stroke-opacity="0.15" stroke-width="2"/>
+
+  <!-- Node template repeated -->
+  <!-- Phase 1 -->
+  <g>
+    <circle cx="60" cy="150" r="10" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="154" font-size="11" font-weight="700" fill="#111111" text-anchor="middle">1</text>
+    <rect x="100" y="118" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.12"/>
+    <text x="124" y="145" font-size="16" font-weight="700" fill="#111111">Upgrade the Target Framework</text>
+    <text x="124" y="166" font-size="13" fill="#555555">.NET Upgrade Assistant moves the TFM forward; characterisation tests (Testcontainers) lock in behaviour</text>
+  </g>
+
+  <!-- Phase 2 -->
+  <g>
+    <circle cx="60" cy="290" r="10" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="294" font-size="11" font-weight="700" fill="#111111" text-anchor="middle">2</text>
+    <rect x="100" y="258" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.12"/>
+    <text x="124" y="285" font-size="16" font-weight="700" fill="#111111">Migrate Off EF6 and EDMX</text>
+    <text x="124" y="306" font-size="13" fill="#555555">Inventory stored-procedure mappings and inheritance, then move to Code First against the unchanged schema</text>
+  </g>
+
+  <!-- Phase 3 -->
+  <g>
+    <circle cx="60" cy="430" r="10" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="434" font-size="11" font-weight="700" fill="#111111" text-anchor="middle">3</text>
+    <rect x="100" y="398" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.12"/>
+    <text x="124" y="425" font-size="16" font-weight="700" fill="#111111">Replace Static State &amp; Service Locators</text>
+    <text x="124" y="446" font-size="13" fill="#555555">Constructor injection replaces static loggers, factories and service locators in the critical path</text>
+  </g>
+
+  <!-- Phase 4 -->
+  <g>
+    <circle cx="60" cy="570" r="10" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="574" font-size="11" font-weight="700" fill="#111111" text-anchor="middle">4</text>
+    <rect x="100" y="538" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.12"/>
+    <text x="124" y="565" font-size="16" font-weight="700" fill="#111111">Make It Async — Without Breaking It</text>
+    <text x="124" y="586" font-size="13" fill="#555555">Async propagates from the I/O boundary up to the controller; no sync-over-async along the way</text>
+  </g>
+
+  <!-- Phase 5 -->
+  <g>
+    <circle cx="60" cy="710" r="10" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="714" font-size="11" font-weight="700" fill="#111111" text-anchor="middle">5</text>
+    <rect x="100" y="678" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.12"/>
+    <text x="124" y="705" font-size="16" font-weight="700" fill="#111111">Add Structured Logging</text>
+    <text x="124" y="726" font-size="13" fill="#555555">Serilog with property logging replaces text files — every field becomes queryable</text>
+  </g>
+
+  <!-- Phase 6 -->
+  <g>
+    <circle cx="60" cy="850" r="10" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="854" font-size="11" font-weight="700" fill="#111111" text-anchor="middle">6</text>
+    <rect x="100" y="818" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.12"/>
+    <text x="124" y="845" font-size="16" font-weight="700" fill="#111111">Add Resilience for External Calls</text>
+    <text x="124" y="866" font-size="13" fill="#555555">Polly pipelines bring consistent retries, timeouts and circuit breakers to every external call</text>
+  </g>
+
+  <!-- Phase 7 -->
+  <g>
+    <circle cx="60" cy="990" r="10" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="994" font-size="11" font-weight="700" fill="#111111" text-anchor="middle">7</text>
+    <rect x="100" y="958" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.12"/>
+    <text x="124" y="985" font-size="16" font-weight="700" fill="#111111">Add Health Checks</text>
+    <text x="124" y="1006" font-size="13" fill="#555555">Separate liveness and readiness probes give infrastructure an honest signal of service health</text>
+  </g>
+
+  <!-- Phase 8 -->
+  <g>
+    <circle cx="60" cy="1130" r="10" fill="#111111" stroke="#111111" stroke-width="2"/>
+    <text x="60" y="1134" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
+    <rect x="100" y="1098" width="740" height="64" rx="10" fill="#000000" fill-opacity="0.05" stroke="#000000" stroke-opacity="0.25"/>
+    <text x="124" y="1125" font-size="16" font-weight="700" fill="#111111">The Strangler Fig — Replace Incrementally</text>
+    <text x="124" y="1146" font-size="13" fill="#555555">New code runs alongside old via an ACL; traffic shifts gradually until the legacy path retires</text>
+  </g>
+
+  <text x="40" y="1230" font-size="12" fill="#999999">Each phase is independently shippable — stop at any point and the system is still better than where it started.</text>
+</svg>
