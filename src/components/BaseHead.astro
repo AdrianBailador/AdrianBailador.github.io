@@ -1,6 +1,4 @@
 ---
-import { ViewTransitions } from "astro:transitions"
-
 interface Props {
   title: string
   description: string
@@ -66,8 +64,6 @@ const ogDescription = description.length > 155
 <script is:inline src="/js/scroll.js"></script>
 <script is:inline src="/js/animate.js"></script>
 <script defer is:inline src="/js/copy.js"></script>
-
-<!-- <ViewTransitions  /> -->
 
 <script>
   import type { TransitionBeforeSwapEvent } from "astro:transitions/client"
