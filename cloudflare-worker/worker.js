@@ -31,6 +31,29 @@ function json(body, status, request) {
   });
 }
 
+function truncate(text, maxLength) {
+  if (!text || text.length <= maxLength) return text;
+  return text.slice(0, maxLength - 1).trimEnd() + "…";
+}
+
+function pickRelevantPosts(posts, query, limit) {
+  const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 1);
+
+  const scored = posts.map(p => {
+    const haystack = `${p.titulo} ${p.resumen}`.toLowerCase();
+    const score = terms.reduce((sum, term) => sum + (haystack.includes(term) ? 1 : 0), 0);
+    return { post: p, score };
+  });
+
+  const matched = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score);
+
+  // Vague or non-matching query: fall back to a sample of the catalog
+  // instead of sending everything.
+  const chosen = matched.length > 0 ? matched : scored;
+
+  return chosen.slice(0, limit).map(s => s.post);
+}
+
 export default {
   async fetch(request, env) {
     if (request.method === "OPTIONS") {
@@ -53,11 +76,17 @@ export default {
       return json({ error: "Missing query or posts" }, 400, request);
     }
 
+    // The full catalog grows with every new post/project and can blow past the
+    // model's tokens-per-minute limit if sent whole on every request. Score
+    // posts by simple keyword overlap with the query and only send the most
+    // relevant ones (falling back to a slice of everything for vague queries).
+    const relevantPosts = pickRelevantPosts(posts, query, 12);
+
     const prompt =
       `You are a helpful assistant for Adrián Bailador's .NET and C# developer blog.\n` +
       `The user is looking for blog posts. Recommend the most relevant ones based on their query.\n\n` +
       `Available posts:\n` +
-      posts.map(p => `- "${p.titulo}": ${p.resumen} → https://adrianbailador.github.io${p.url}`).join("\n") +
+      relevantPosts.map(p => `- "${p.titulo}": ${truncate(p.resumen, 160)} → https://adrianbailador.github.io${p.url}`).join("\n") +
       `\n\nUser query: "${query}"\n\n` +
       `Be concise and friendly. Include the full URL of the recommended post(s) as plain text (no markdown, no parentheses around URLs).`;
 
