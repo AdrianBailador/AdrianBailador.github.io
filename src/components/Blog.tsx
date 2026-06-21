@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content"
-import { createEffect, createSignal, For, Show } from "solid-js"
+import { createMemo, createSignal, For, Show } from "solid-js"
 import ArrowCard from "@components/ArrowCard"
 import { cn } from "@lib/utils"
 
@@ -12,23 +12,22 @@ type SortOption = "date-desc" | "date-asc" | "title-asc" | "title-desc"
 
 export default function Blog({ data, tags }: Props) {
   const [filter, setFilter] = createSignal(new Set<string>())
-  const [posts, setPosts] = createSignal<CollectionEntry<"blog">[]>([])
   const [isFilterOpen, setIsFilterOpen] = createSignal(false)
   const [searchQuery, setSearchQuery] = createSignal("")
   const [sortBy, setSortBy] = createSignal<SortOption>("date-desc")
 
-  createEffect(() => {
+  const posts = createMemo(() => {
     let filteredPosts = data.filter((entry) => {
       // Filter by tags
-      const tagMatch = Array.from(filter()).every((value) => 
-        entry.data.tags.some((tag: string) => 
+      const tagMatch = Array.from(filter()).every((value) =>
+        entry.data.tags.some((tag: string) =>
           tag.toLowerCase() === String(value).toLowerCase()
         )
       )
 
       // Filter by search query
       const searchLower = searchQuery().toLowerCase()
-      const searchMatch = searchLower === "" || 
+      const searchMatch = searchLower === "" ||
         entry.data.title.toLowerCase().includes(searchLower) ||
         entry.data.summary?.toLowerCase().includes(searchLower) ||
         entry.data.tags.some((tag: string) => tag.toLowerCase().includes(searchLower))
@@ -37,7 +36,7 @@ export default function Blog({ data, tags }: Props) {
     })
 
     // Sort posts
-    filteredPosts = [...filteredPosts].sort((a, b) => {
+    return [...filteredPosts].sort((a, b) => {
       switch (sortBy()) {
         case "date-desc":
           return new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
@@ -51,8 +50,6 @@ export default function Blog({ data, tags }: Props) {
           return 0
       }
     })
-
-    setPosts(filteredPosts)
   })
 
   function toggleTag(tag: string) {
