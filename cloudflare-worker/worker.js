@@ -1,8 +1,8 @@
 /**
  * Cloudflare Worker — Blog AI Assistant proxy
  *
- * Secrets (set via `wrangler secret put GEMINI_API_KEY`):
- *   GEMINI_API_KEY  — your Google Gemini API key
+ * Uses Cloudflare Workers AI (free, no external API key needed).
+ * Requires `[ai] binding = "AI"` in wrangler.toml.
  *
  * Deploy:
  *   npx wrangler deploy
@@ -91,31 +91,16 @@ export default {
       `Be concise and friendly. Include the full URL of the recommended post(s) as plain text (no markdown, no parentheses around URLs).`;
 
     try {
-      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${env.GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "openai/gpt-oss-20b",
-          messages: [{ role: "user", content: prompt }],
-          temperature: 0.7,
-          max_tokens: 512,
-        }),
+      const result = await env.AI.run("@cf/meta/llama-3.2-3b-instruct", {
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 512,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        return json({ error: data?.error?.message || `Groq error ${res.status}` }, 502, request);
-      }
-
-      const answer = data?.choices?.[0]?.message?.content ?? "No response received.";
+      const answer = result?.response ?? "No response received.";
       return json({ answer }, 200, request);
 
     } catch (err) {
-      return json({ error: "Upstream error: " + err.message }, 502, request);
+      return json({ error: "AI error: " + err.message }, 502, request);
     }
   },
 };
