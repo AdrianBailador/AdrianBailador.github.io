@@ -13,7 +13,7 @@ const work = defineCollection({
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     summary: z.string(),
     date: z.coerce.date(),
@@ -21,6 +21,7 @@ const blog = defineCollection({
     draft: z.boolean().optional(),
     series: z.string().optional(),
     seriesPart: z.number().optional(),
+    heroImage: image().optional(),
   }),
 })
 

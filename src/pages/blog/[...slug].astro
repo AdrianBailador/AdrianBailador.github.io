@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"blog">
 const post = Astro.props
 const { title, summary, date } = post.data
-const ogImage = `/og/${post.id}.png`
+const ogImage = post.data.heroImage?.src ?? `/og/${post.id}.png`
 const { headings } = await render(post)
 
 // Load series posts if this article belongs to a series

@@ -158,14 +158,63 @@ export const GET: APIRoute = async ({ props }) => {
                               },
                             },
                             {
-                              type: "span",
+                              type: "div",
                               props: {
                                 style: {
-                                  color: "#a78bfa",
-                                  fontSize: "20px",
-                                  fontWeight: 700,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "10px",
                                 },
-                                children: "Read article →",
+                                children: [
+                                  {
+                                    type: "span",
+                                    props: {
+                                      style: {
+                                        color: "#a78bfa",
+                                        fontSize: "20px",
+                                        fontWeight: 700,
+                                      },
+                                      children: "Read article",
+                                    },
+                                  },
+                                  // Right arrow drawn with divs (shaft + rotated chevron head) —
+                                  // Atkinson has no U+2192 glyph and satori won't render SVG here
+                                  {
+                                    type: "div",
+                                    props: {
+                                      style: {
+                                        display: "flex",
+                                        alignItems: "center",
+                                      },
+                                      children: [
+                                        {
+                                          type: "div",
+                                          props: {
+                                            style: {
+                                              width: "14px",
+                                              height: "2.5px",
+                                              backgroundColor: "#a78bfa",
+                                              borderRadius: "2px",
+                                            },
+                                          },
+                                        },
+                                        {
+                                          type: "div",
+                                          props: {
+                                            style: {
+                                              width: "9px",
+                                              height: "9px",
+                                              borderTop: "2.5px solid #a78bfa",
+                                              borderRight: "2.5px solid #a78bfa",
+                                              transform: "rotate(45deg)",
+                                              marginLeft: "-8px",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
                               },
                             },
                           ],

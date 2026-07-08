@@ -3,6 +3,7 @@ title: "C# 15 Preview: Union Types and Closed Hierarchies, Finally"
 summary: "C# is finally getting union types. After a decade of sealed-class workarounds and OneOf packages, C# 15 ships real unions and closed hierarchies in the .NET 11 preview. Here's what they look like, when to reach for each, and the gotchas the announcement posts won't tell you about."
 date: "2026-07-08"
 tags: ["csharp", "dotnet", "csharp-15", "dotnet-11", "language-features", "pattern-matching", "preview"]
+heroImage: "Union.png"
 ---
 
 ![C# 15 Preview: Union Types and Closed Hierarchies, Finally – by Adrian Bailador Panero](Union.png)
