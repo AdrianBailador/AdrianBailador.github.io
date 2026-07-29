@@ -12,6 +12,10 @@ I built a semantic search API a while back on top of raw OpenAI embedding calls,
 
 That's the exact problem `Microsoft.Extensions.AI` (MEAI) exists to close. It's not a new SDK competing with the provider SDKs — it's a thin, provider-agnostic interface that sits in front of them, plus a set of DI-friendly middleware components (caching, logging, telemetry, automatic tool invocation) that work identically regardless of which model answers on the other end.
 
+## Code
+
+The examples in this post are runnable end to end in a companion repo: [MicrosoftExtensionsAiDotnet](https://github.com/AdrianBailador/MicrosoftExtensionsAiDotnet) — a minimal API against a local Ollama model, no API keys needed, with one endpoint per section below (caching, streaming, keyed clients, tool calling, conversation state).
+
 ## Two Packages, Three Interfaces
 
 `Microsoft.Extensions.AI.Abstractions` defines the contracts and nothing else: `IChatClient`, `IEmbeddingGenerator<TInput,TEmbedding>`, and the experimental `IImageGenerator`. Library authors implement against this package — it's what a provider SDK depends on to plug into the ecosystem.
