@@ -93,3 +93,7 @@ A `PackageReference` without a version now raises `NU1015` instead of silently r
 5. If you mix cookie auth and API endpoints in the same app, hit an unauthenticated API route by hand and confirm you get a 401, not a redirect.
 
 None of it's exotic. It's just the gap between "the app compiles" and "the app behaves the way it did on .NET 9," and three months is plenty of time to close that gap properly — as long as you go looking for it now instead of the week before November 10.
+
+## Code
+
+Full runnable project, migrations included, with every SQL statement and log line in this post captured straight from a real `dotnet run` on both SDKs: [DotNet10MigrationChecklist](https://github.com/AdrianBailador/DotNet10MigrationChecklist).
