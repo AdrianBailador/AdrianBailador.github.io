@@ -100,8 +100,8 @@ export const SOCIALS: Socials = [
 // "Discussions" on the AdrianBailador/AdrianBailador.github.io repo.
 export const GISCUS: Giscus = {
   REPO: "AdrianBailador/AdrianBailador.github.io",
-  REPO_ID: "",
+  REPO_ID: "R_kgDOOMikUg",
   CATEGORY: "Announcements",
-  CATEGORY_ID: "",
+  CATEGORY_ID: "DIC_kwDOOMikUs4DEcU3",
 }
 
