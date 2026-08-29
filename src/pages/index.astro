@@ -18,6 +18,17 @@ const projects = (await getCollection("projects"))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0,3)
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.AUTHOR,
+  url: Astro.site?.href,
+  jobTitle: "Senior Software Engineer",
+  sameAs: SOCIALS
+    .filter(social => social.HREF.startsWith("http"))
+    .map(social => social.HREF),
+}
+
 const stack = [
   { 
     text: "Astro", 
@@ -42,7 +53,7 @@ const stack = [
 ]
 ---
 
-<PageLayout title="Adrian Bailador" description={SITE.DESCRIPTION}>
+<PageLayout title={SITE.TITLE} description={SITE.DESCRIPTION} structuredData={personSchema}>
 
   <!-- Light Mode: Particles -->
   <div class='absolute inset-0 block dark:hidden'>

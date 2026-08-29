@@ -1,8 +1,8 @@
-import type { Site, Page, Links, Socials } from "@types"
+import type { Site, Page, Links, Socials, Giscus } from "@types"
 
 // Global
 export const SITE: Site = {
-  TITLE: "Adrian Bailador | .NET ",
+  TITLE: "Adrian Bailador | .NET",
   DESCRIPTION: "Welcome to my portfolio and blog about software engineering, coding and technology. Talk about .NET, C#, Azure, Visual Studio, and a bit of Next.js.",
   AUTHOR: "Adrian Bailador Panero",
 }
@@ -87,11 +87,21 @@ export const SOCIALS: Socials = [
     TEXT: "adrianbailador-dev",
     HREF: "https://medium.com/@adrianbailador",
   },
-  { 
+  {
     NAME: "Dev.to",
     ICON: "devto",
     TEXT: "adrianbailador-dev",
     HREF: "https://dev.to/adrianbailador",
   },
 ]
+
+// Giscus comments (blog posts)
+// Generate repoId/categoryId at https://giscus.app after enabling
+// "Discussions" on the AdrianBailador/AdrianBailador.github.io repo.
+export const GISCUS: Giscus = {
+  REPO: "AdrianBailador/AdrianBailador.github.io",
+  REPO_ID: "",
+  CATEGORY: "Announcements",
+  CATEGORY_ID: "",
+}
 

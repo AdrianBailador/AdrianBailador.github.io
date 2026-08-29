@@ -7,6 +7,7 @@ import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
 import ReadingProgress from "@components/ReadingProgress.astro"
 import TableOfContents from "@components/TableOfContents.astro"
 import SeriesNav from "@components/SeriesNav.astro"
+import { SITE } from "@consts"
 
 // Create the static blog pages
 export async function getStaticPaths() {
@@ -24,6 +25,22 @@ const { title, summary, date } = post.data
 const ogImage = post.data.heroImage?.src ?? `/og/${post.id}.png`
 const { headings } = await render(post)
 
+const canonicalURL = new URL(`/blog/${post.id}`, Astro.site).href
+const blogPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: summary,
+  datePublished: date.toISOString(),
+  image: new URL(ogImage, Astro.site).href,
+  mainEntityOfPage: canonicalURL,
+  author: {
+    "@type": "Person",
+    name: SITE.AUTHOR,
+    url: Astro.site?.href,
+  },
+}
+
 // Load series posts if this article belongs to a series
 const seriesPosts = post.data.series
   ? (await getCollection("blog"))
@@ -32,7 +49,7 @@ const seriesPosts = post.data.series
   : []
 ---
 
-<PageLayout title={title} description={summary} image={ogImage} ogType="article" publishedTime={date}>
+<PageLayout title={title} description={summary} image={ogImage} ogType="article" publishedTime={date} structuredData={blogPostingSchema}>
   <ReadingProgress />
   <TopLayout>
     <div class="animate">

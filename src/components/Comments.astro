@@ -1,0 +1,51 @@
+---
+import { GISCUS } from "@consts"
+
+const isConfigured = Boolean(GISCUS.REPO_ID && GISCUS.CATEGORY_ID)
+---
+
+{isConfigured && (
+  <div class="mt-16 pt-10 border-t border-black/10 dark:border-white/15">
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={GISCUS.REPO}
+      data-repo-id={GISCUS.REPO_ID}
+      data-category={GISCUS.CATEGORY}
+      data-category-id={GISCUS.CATEGORY_ID}
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="preferred_color_scheme"
+      data-lang="en"
+      crossorigin="anonymous"
+      async
+    ></script>
+    <script is:inline>
+      function giscusTheme() {
+        return document.documentElement.classList.contains("dark") ? "dark" : "light"
+      }
+
+      function sendGiscusTheme() {
+        const iframe = document.querySelector("iframe.giscus-frame")
+        iframe?.contentWindow?.postMessage(
+          { giscus: { setConfig: { theme: giscusTheme() } } },
+          "https://giscus.app"
+        )
+      }
+
+      new MutationObserver(sendGiscusTheme).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      })
+
+      window.addEventListener("message", (event) => {
+        if (event.origin !== "https://giscus.app") return
+        if (!(event.data?.giscus?.discussion)) return
+        sendGiscusTheme()
+      })
+    </script>
+  </div>
+)}

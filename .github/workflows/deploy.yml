@@ -24,6 +24,8 @@ jobs:
         uses: withastro/action@v3
         with:
           node-version: 24
+        env:
+          PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.PUBLIC_UMAMI_WEBSITE_ID }}
 
   deploy:
     needs: build

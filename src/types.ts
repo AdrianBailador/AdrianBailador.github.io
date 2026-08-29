@@ -18,3 +18,10 @@ export type Socials = {
   TEXT: string
   HREF: string
 }[]
+
+export type Giscus = {
+  REPO: string
+  REPO_ID: string
+  CATEGORY: string
+  CATEGORY_ID: string
+}

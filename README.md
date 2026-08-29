@@ -39,6 +39,20 @@ Rendered in ~40ms on localhost
 
 The blog posts on the demo serve as the documentation and configuration.
 
+### Analytics (Umami)
+
+1. Create a free account at [umami.is](https://umami.is), add this site, and copy its website ID.
+2. Local dev: copy `.env.example` to `.env` and set `PUBLIC_UMAMI_WEBSITE_ID`.
+3. Production (GitHub Pages): add a repository variable named `PUBLIC_UMAMI_WEBSITE_ID` under *Settings → Secrets and variables → Actions → Variables*.
+
+The script only loads on production builds, never in `astro dev`.
+
+### Comments (giscus)
+
+1. Enable "Discussions" under the repo's Settings tab.
+2. Go to [giscus.app](https://giscus.app), select this repo, and copy the generated `repo-id` and `category-id`.
+3. Fill in `GISCUS.REPO_ID` and `GISCUS.CATEGORY_ID` in `src/consts.ts`. Comments stay hidden until both are set.
+
 ## 💻 Commands
 
 All commands are run from the root of the project, from a terminal:

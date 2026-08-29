@@ -6,11 +6,12 @@ interface Props {
   ogTitle?: string
   ogType?: "website" | "article"
   publishedTime?: Date
+  structuredData?: Record<string, unknown>
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
-const { title, description, image = "/adrian.jpg", ogTitle, ogType = "website", publishedTime } = Astro.props
+const { title, description, image = "/adrian.jpg", ogTitle, ogType = "website", publishedTime, structuredData } = Astro.props
 
 // OG title: use raw article title if provided, otherwise strip the site suffix
 const resolvedOgTitle = ogTitle ?? title.replace(/\s*\|.*$/, "").trim()
@@ -58,6 +59,16 @@ const ogDescription = description.length > 155
 
 <!-- RSS Feed -->
 <link rel="alternate" type="application/rss+xml" title={title} href={`${Astro.site}rss.xml`}/>
+
+<!-- Structured Data -->
+{structuredData && (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+)}
+
+<!-- Analytics -->
+{import.meta.env.PROD && import.meta.env.PUBLIC_UMAMI_WEBSITE_ID && (
+  <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id={import.meta.env.PUBLIC_UMAMI_WEBSITE_ID}></script>
+)}
 
 <!-- Global Scripts -->
 <script is:inline src="/js/theme.js"></script>
