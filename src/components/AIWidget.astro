@@ -95,9 +95,11 @@
   #queryWrap {
     display: flex;
     gap: 8px;
+    min-width: 0;
   }
   #userQuery {
     flex: 1;
+    min-width: 0;
     background: #20203a;
     color: #fff;
     padding: 10px 14px;
@@ -189,6 +191,11 @@
     #aiPanelContent {
       border-radius: 20px 20px 0 0;
       max-height: 75vh;
+    }
+    /* iOS Safari auto-zooms the page when a focused input's font-size
+       is under 16px — keep it at 16px here to prevent that. */
+    #userQuery {
+      font-size: 16px;
     }
   }
 </style>
