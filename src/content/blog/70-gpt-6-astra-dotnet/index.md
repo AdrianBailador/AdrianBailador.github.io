@@ -1,6 +1,6 @@
 ---
 title: "GPT-6 Astra for .NET: What Changes in the API, and Where the SDK Hasn't Caught Up"
-summary: "OpenAI shipped GPT-6 Astra on September 3, 2026. Before wiring it into a .NET project, here's the actual API contract — context window, pricing, reasoning effort — checked against the live docs, plus what I found installing the real OpenAI NuGet package: one path is stable, one is still experimental, and the SDK's reasoning-effort enum is behind what the model itself supports."
+summary: "OpenAI shipped GPT-6 Astra on September 3, 2026. Before wiring it into a .NET project, here's the actual API contract — context window, pricing, reasoning effort — checked against the live docs, plus what I found installing the real OpenAI NuGet package: the stable client can't do Astra's tool calling at all, the client that can is still experimental, and the SDK's named reasoning levels stop short of what the model documents."
 date: "2026-09-06"
 tags: ["dotnet", "csharp", "ai", "openai", "chatgpt", "llm", "microsoft-extensions-ai"]
 draft: true
@@ -12,21 +12,21 @@ Announcement posts don't tell you what actually breaks when you point your .NET 
 
 ## Code
 
-The three examples below are runnable end to end in a companion repo: [gpt-6-astra-dotnet](https://github.com/AdrianBailador/gpt-6-astra-dotnet) — one mode per client shape (`chat`, `meai`, `responses`), same prompt, same reasoning effort, so the only thing that changes between runs is the code path.
+The three examples below are runnable end to end in a companion repo: [gpt-6-astra-dotnet](https://github.com/AdrianBailador/gpt-6-astra-dotnet) — one mode per client shape (`chat`, `meai`, `responses`), same prompt in all three, so the only thing that changes between runs is the code path.
 
 ## What's actually in the model
 
-The model ID is `gpt-6-astra`. Context window is 1,050,000 tokens, with a max input of 922,000 and max output of 128,000. Input takes text and images; output is text only. Knowledge cutoff is April 30, 2026. It's reachable through Chat Completions, Responses, and Batch, with streaming, structured outputs, function calling, file search, image input, web search, and prompt caching all supported. Reasoning effort, per the API docs, takes five values: `low`, `medium`, `high`, `xhigh`, `max`.
+The model ID is `gpt-6-astra`. Context window is 1,050,000 tokens, max output is 128,000 — leaving roughly 922,000 for input, though that's my subtraction, not a number OpenAI states outright. Input takes text and images; output is text only. Knowledge cutoff is April 30, 2026. It's reachable through Chat Completions, Responses, and Batch, with streaming, structured outputs, image input, and prompt caching all supported everywhere. Reasoning effort takes five values: `low`, `medium`, `high`, `xhigh`, `max`.
 
 ### Pricing, per the live pricing page
 
 ![GPT-6 Astra API pricing per 1M tokens: $10 input, $1 cached input, $12.50 cache writes, $50 output](pricing.png)
 
-Requests over 272K input tokens are billed at 2x the input/cache rate and 1.5x the output rate for the whole request — not just the overflow. Batch and Flex both run at 50% of standard rates. There's also a "fast mode" at roughly 2.5x the speed for about 2x the price.
+Requests over 272K input tokens are billed at 2x the input/cache rate and 1.5x the output rate for the whole request — not just the overflow. Batch and Flex both run at 50% of standard rates. There's also a Fast mode, priced at 2x the applicable rates — the docs commit to the price, not to a specific speedup, so I'm not going to invent one either.
 
 ## Calling it from .NET: two paths, one of them experimental
 
-`dotnet add package OpenAI` currently installs 2.13.0. It exposes GPT-6 Astra through two different clients, and only one of them is safe to depend on without a warning suppression.
+`dotnet add package OpenAI` currently installs 2.13.0. It exposes GPT-6 Astra through two different clients, and only one of them is available without opting into an experimental API.
 
 ### The stable path: Chat Completions
 
@@ -62,9 +62,11 @@ var response = await client.GetResponseAsync(
 Console.WriteLine(response);
 ```
 
-`OpenAIClientExtensions.AsIChatClient(this ChatClient)` has no `[Experimental]` attribute on it either. This is the shape to reach for in production code today.
+`OpenAIClientExtensions.AsIChatClient(this ChatClient)` has no `[Experimental]` attribute on it either. This is the shape to reach for when Astra is just answering questions — no tools involved.
 
 One packaging gotcha worth knowing before you add both: `Microsoft.Extensions.AI.OpenAI` 10.9.0 declares a dependency on `OpenAI >= 2.12.0 && < 2.13.0`. `dotnet add package OpenAI` on its own resolves to 2.13.0, one patch outside that range — add both packages the naive way and you'll get an `NU1608` warning about a version outside the dependency constraint. It still restores and builds, but it's worth pinning the `OpenAI` version explicitly if you want a clean restore log.
+
+That "no tools involved" caveat isn't a small one. OpenAI's own release notes for Astra say it plainly: tool calling requires the Responses API, and if you're already calling tools through Chat Completions against another model, there's a dedicated migration guide for moving that to Responses. For Astra specifically, function calling, web search, file search, code interpreter, computer use, and MCP all live on the client that's still gated behind `OPENAI001` — the stable client answers questions, the experimental one is where the agentic behavior actually lives.
 
 ### The experimental path: Responses API
 
@@ -100,18 +102,29 @@ ResponseResult result = await client.CreateResponseAsync(new CreateResponseOptio
 
 The same `Microsoft.Extensions.AI.OpenAI` package also ships `AsIChatClient(this ResponsesClient, string)` — and that one is `[Experimental("OPENAI001")]` too, consistently.
 
-## The gap: the SDK's reasoning levels stop at `High`
+## The gap: named reasoning levels stop at `High`
 
-This is the part worth knowing before you plan around it. GPT-6 Astra's documented `reasoning.effort` values are `low`, `medium`, `high`, `xhigh`, `max`. But both convenience enums in the .NET SDK — `ChatReasoningEffortLevel` (Chat Completions) and `ResponseReasoningEffortLevel` (Responses) — currently expose only five static members each: `None`, `Minimal`, `Low`, `Medium`, `High`. No `XHigh`, no `Max`, on either one, as of 2.13.0.
+This is the part worth knowing before you plan around it. GPT-6 Astra's documented `reasoning.effort` values are `low`, `medium`, `high`, `xhigh`, `max` — and, worth calling out on its own, Astra explicitly does *not* accept `none`. That's a small irony given what's coming next: both convenience enums in the .NET SDK — `ChatReasoningEffortLevel` (Chat Completions) and `ResponseReasoningEffortLevel` (Responses) — expose exactly five static members each in 2.13.0: `None`, `Minimal`, `Low`, `Medium`, `High`. The one named value that's fastest to reach for by habit is the one value this model will reject.
 
-Both types are extensible string wrappers rather than real C# enums — each has a public `string` constructor — so the underlying mechanism to send `xhigh` or `max` is almost certainly already there:
+Neither `xhigh` nor `max` exists as a named member on either type — but that doesn't mean the .NET SDK can't send them, only that it hasn't given them a name yet. Both types are extensible string wrappers rather than real C# enums, each with a public `string` constructor, and I found direct proof the wrapper is meant to carry exactly this: `Microsoft.Extensions.AI`'s own OpenAI integration already does it internally. `Microsoft.Extensions.AI.Abstractions` 10.9.0 defines `ReasoningEffort` as `None`, `Low`, `Medium`, `High`, `ExtraHigh` on `ChatOptions.Reasoning`, and the mapping inside `Microsoft.Extensions.AI.OpenAI` 10.9.0 sends `ExtraHigh` as `new ChatReasoningEffortLevel("xhigh")` — I confirmed the literal UTF-16 string `"xhigh"` is embedded in the actual 10.9.0 DLL I've got pinned in the companion repo, not just in a newer sample on GitHub's `main` branch. So this works at the `IChatClient` layer without writing the raw string yourself:
 
 ```csharp
-ReasoningEffortLevel = new ChatReasoningEffortLevel("xhigh"),
+IChatClient client = new ChatClient("gpt-6-astra", Environment.GetEnvironmentVariable("OPENAI_API_KEY"))
+    .AsIChatClient();
+
+var response = await client.GetResponseAsync(
+    "Refactor the DbContext lifetime across every endpoint in this project.",
+    new ChatOptions { Reasoning = new ReasoningOptions { Effort = ReasoningEffort.ExtraHigh } });
 ```
 
-I haven't fired that against a live GPT-6 Astra endpoint to confirm it round-trips cleanly — that's the one claim in this post that's inference from the SDK's own established pattern for these wrapper types, not a verified API response. If you try it before I follow up, I'd genuinely like to know whether the API accepts it as-is.
+`ReasoningEffort` stops at `ExtraHigh`, though — there's no abstraction-level equivalent for `max`. To reach that one, or to use `xhigh`/`max` against the raw SDK types directly, you're back to constructing the string yourself:
+
+```csharp
+ReasoningEffortLevel = new ChatReasoningEffortLevel("max"),
+```
+
+What I haven't done is fire that against a live GPT-6 Astra endpoint to confirm the API accepts `max` back with a 200 rather than a validation error. Confirming the SDK is willing to *send* an arbitrary string and confirming Astra is willing to *accept* it are two different claims, and only the first one is checked here. If you try it before I follow up, I'd genuinely like to know.
 
 ## What's still open
 
-Everything above — the model's specs, the pricing table, the class names, the `[Experimental]` attributes — is checked against the live docs and the SDK's actual compiled surface, not the announcement post or someone else's blog snippet. What isn't here yet: a real task run through both `high` and a manually-constructed `xhigh`/`max` to see whether the extra effort is worth the 2x token cost on an actual .NET workload, the same follow-up I still owe from the Fable 5 post. That comparison is next, once GPT-6 Astra is out of phased rollout and reachable without a Daybreak invite.
+Everything above — the model's specs, the pricing card, the class names, the `[Experimental]` attribute, the `"xhigh"` string embedded in the shipped `Microsoft.Extensions.AI.OpenAI` DLL — is checked against the live docs and the SDK's actual compiled surface, not the announcement post or someone else's blog snippet. What isn't checked yet: whether GPT-6 Astra's API actually accepts `max` back with a 200, and a real task run through `high` versus `xhigh` through the experimental Responses client to see whether the extra effort is worth the 2x token cost on an actual .NET workload — the same follow-up I still owe from the Fable 5 post. That comparison is next, once GPT-6 Astra is out of phased rollout and reachable without a Daybreak invite.
