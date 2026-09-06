@@ -20,12 +20,7 @@ The model ID is `gpt-6-astra`. Context window is 1,050,000 tokens, with a max in
 
 ### Pricing, per the live pricing page
 
-| | Rate |
-|---|---|
-| Input | $10 / MTok |
-| Cached input | $1 / MTok |
-| Cache writes | $12.50 / MTok |
-| Output | $50 / MTok |
+![GPT-6 Astra API pricing per 1M tokens: $10 input, $1 cached input, $12.50 cache writes, $50 output](pricing.png)
 
 Requests over 272K input tokens are billed at 2x the input/cache rate and 1.5x the output rate for the whole request — not just the overflow. Batch and Flex both run at 50% of standard rates. There's also a "fast mode" at roughly 2.5x the speed for about 2x the price.
 
