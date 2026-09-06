@@ -47,7 +47,7 @@ ChatCompletion completion = await client.CompleteChatAsync(
 Console.WriteLine(completion.Content[0].Text);
 ```
 
-And through `Microsoft.Extensions.AI` — a separate package, `Microsoft.Extensions.AI.OpenAI` — the bridge is just as unremarkable, which is the point if you're already standardized on `IChatClient` the way I described in [my Microsoft.Extensions.AI post](/blog/66-microsoft-extensions-ai-ichatclient):
+And through `Microsoft.Extensions.AI` (a separate package, `Microsoft.Extensions.AI.OpenAI`), the bridge is just as unremarkable, which is the point if you're already standardized on `IChatClient` the way I described in [my Microsoft.Extensions.AI post](/blog/66-microsoft-extensions-ai-ichatclient):
 
 ```csharp
 using OpenAI.Chat;
@@ -70,7 +70,7 @@ That "no tools involved" caveat isn't a small one. OpenAI's own release notes fo
 
 ### The experimental path: Responses API
 
-`OpenAI.Responses.ResponsesClient` — the whole class — is marked `[Experimental("OPENAI001")]`. That's not a stray warning on one method; try to construct it and the compiler stops you cold until you suppress the diagnostic:
+`OpenAI.Responses.ResponsesClient`, the whole class, is marked `[Experimental("OPENAI001")]`. That's not a stray warning on one method; try to construct it and the compiler stops you cold until you suppress the diagnostic:
 
 ```csharp
 #pragma warning disable OPENAI001
@@ -86,7 +86,7 @@ ResponseResult result = await client.CreateResponseAsync(
 Console.WriteLine(result.GetOutputText());
 ```
 
-For anything beyond the three-string convenience overload — tools, reasoning options, structured output — you build a `CreateResponseOptions` (not `ResponseCreationOptions`, which is what I'd have guessed from the docs' own prose before checking):
+For anything beyond the three-string convenience overload (tools, reasoning options, structured output), you build a `CreateResponseOptions` (not `ResponseCreationOptions`, which is what I'd have guessed from the docs' own prose before checking):
 
 ```csharp
 ResponseResult result = await client.CreateResponseAsync(new CreateResponseOptions
@@ -104,7 +104,7 @@ The same `Microsoft.Extensions.AI.OpenAI` package also ships `AsIChatClient(this
 
 ## The gap: named reasoning levels stop at `High`
 
-This is the part worth knowing before you plan around it. GPT-6 Astra's documented `reasoning.effort` values are `low`, `medium`, `high`, `xhigh`, `max` — and, worth calling out on its own, Astra explicitly does *not* accept `none`. That's a small irony given what's coming next: both convenience enums in the .NET SDK — `ChatReasoningEffortLevel` (Chat Completions) and `ResponseReasoningEffortLevel` (Responses) — expose exactly five static members each in 2.13.0: `None`, `Minimal`, `Low`, `Medium`, `High`. The one named value that's fastest to reach for by habit is the one value this model will reject.
+This is the part worth knowing before you plan around it. GPT-6 Astra's documented `reasoning.effort` values are `low`, `medium`, `high`, `xhigh`, `max` — and, worth calling out on its own, Astra explicitly does *not* accept `none`. That's a small irony given what's coming next: both convenience enums in the .NET SDK (`ChatReasoningEffortLevel` for Chat Completions, `ResponseReasoningEffortLevel` for Responses) expose exactly five static members each in 2.13.0: `None`, `Minimal`, `Low`, `Medium`, `High`. The one named value that's fastest to reach for by habit is the one value this model will reject.
 
 Neither `xhigh` nor `max` exists as a named member on either type — but that doesn't mean the .NET SDK can't send them, only that it hasn't given them a name yet. Both types are extensible string wrappers rather than real C# enums, each with a public `string` constructor, and I found direct proof the wrapper is meant to carry exactly this: `Microsoft.Extensions.AI`'s own OpenAI integration already does it internally. `Microsoft.Extensions.AI.Abstractions` 10.9.0 defines `ReasoningEffort` as `None`, `Low`, `Medium`, `High`, `ExtraHigh` on `ChatOptions.Reasoning`, and the mapping inside `Microsoft.Extensions.AI.OpenAI` 10.9.0 sends `ExtraHigh` as `new ChatReasoningEffortLevel("xhigh")` — I confirmed the literal UTF-16 string `"xhigh"` is embedded in the actual 10.9.0 DLL I've got pinned in the companion repo, not just in a newer sample on GitHub's `main` branch. So this works at the `IChatClient` layer without writing the raw string yourself:
 
@@ -127,4 +127,4 @@ What I haven't done is fire that against a live GPT-6 Astra endpoint to confirm 
 
 ## What's still open
 
-Everything above — the model's specs, the pricing card, the class names, the `[Experimental]` attribute, the `"xhigh"` string embedded in the shipped `Microsoft.Extensions.AI.OpenAI` DLL — is checked against the live docs and the SDK's actual compiled surface, not the announcement post or someone else's blog snippet. What isn't checked yet: whether GPT-6 Astra's API actually accepts `max` back with a 200, and a real task run through `high` versus `xhigh` through the experimental Responses client to see whether the extra effort is worth the 2x token cost on an actual .NET workload — the same follow-up I still owe from the Fable 5 post. That comparison is next, once GPT-6 Astra is out of phased rollout and reachable without a Daybreak invite.
+Everything above (the model's specs, the pricing card, the class names, the `[Experimental]` attribute, the `"xhigh"` string embedded in the shipped `Microsoft.Extensions.AI.OpenAI` DLL) is checked against the live docs and the SDK's actual compiled surface, not the announcement post or someone else's blog snippet. What isn't checked yet: whether GPT-6 Astra's API actually accepts `max` back with a 200, and a real task run through `high` versus `xhigh` through the experimental Responses client to see whether the extra effort is worth the 2x token cost on an actual .NET workload — the same follow-up I still owe from the Fable 5 post. That comparison is next, once GPT-6 Astra is out of phased rollout and reachable without a Daybreak invite.
