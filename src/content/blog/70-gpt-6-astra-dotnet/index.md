@@ -10,15 +10,13 @@ OpenAI released GPT-6 Astra on September 3, 2026 — described as a "new capabil
 
 Announcement posts don't tell you what actually breaks when you point your .NET code at a new model ID. So I did what I did for [Claude Fable 5](/blog/67-claude-fable-5-dotnet-evaluation) a few weeks back: checked the model's real API contract against OpenAI's live docs, then installed the actual `OpenAI` NuGet package — version 2.13.0, whatever `dotnet add package OpenAI` gives you today — and inspected what it actually exposes, rather than trusting a blog post's code sample. The gap between the two turned out to be the most useful part of this post.
 
+## Code
+
+The three examples below are runnable end to end in a companion repo: [gpt-6-astra-dotnet](https://github.com/AdrianBailador/gpt-6-astra-dotnet) — one mode per client shape (`chat`, `meai`, `responses`), same prompt, same reasoning effort, so the only thing that changes between runs is the code path.
+
 ## What's actually in the model
 
-- **Model ID:** `gpt-6-astra`
-- **Context window:** 1,050,000 tokens (max input 922,000, max output 128,000)
-- **Modalities:** text and image in, text-only out
-- **Knowledge cutoff:** April 30, 2026
-- **Endpoints:** Chat Completions, Responses, Batch
-- **Features:** streaming, structured outputs, function calling, file search, image input, web search, prompt caching
-- **Reasoning effort (per the API docs):** `low`, `medium`, `high`, `xhigh`, `max`
+The model ID is `gpt-6-astra`. Context window is 1,050,000 tokens, with a max input of 922,000 and max output of 128,000. Input takes text and images; output is text only. Knowledge cutoff is April 30, 2026. It's reachable through Chat Completions, Responses, and Batch, with streaming, structured outputs, function calling, file search, image input, web search, and prompt caching all supported. Reasoning effort, per the API docs, takes five values: `low`, `medium`, `high`, `xhigh`, `max`.
 
 ### Pricing, per the live pricing page
 
