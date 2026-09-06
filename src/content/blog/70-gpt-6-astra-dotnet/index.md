@@ -4,7 +4,7 @@ summary: "OpenAI shipped GPT-6 Astra on September 3, 2026. Before wiring it into
 date: "2026-09-06"
 tags: ["dotnet", "csharp", "ai", "openai", "chatgpt", "llm", "microsoft-extensions-ai"]
 heroImage: "Astra.png"
-draft: true
+draft: false
 ---
 
 ![GPT-6 Astra for .NET: What Changes in the API, and Where the SDK Hasn't Caught Up – by Adrian Bailador Panero](Astra.png)
