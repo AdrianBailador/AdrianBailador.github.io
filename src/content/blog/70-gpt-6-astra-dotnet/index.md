@@ -3,8 +3,11 @@ title: "GPT-6 Astra for .NET: What Changes in the API, and Where the SDK Hasn't 
 summary: "OpenAI shipped GPT-6 Astra on September 3, 2026. Before wiring it into a .NET project, here's the actual API contract — context window, pricing, reasoning effort — checked against the live docs, plus what I found installing the real OpenAI NuGet package: the stable client can't do Astra's tool calling at all, the client that can is still experimental, and the SDK's named reasoning levels stop short of what the model documents."
 date: "2026-09-06"
 tags: ["dotnet", "csharp", "ai", "openai", "chatgpt", "llm", "microsoft-extensions-ai"]
+heroImage: "Astra.png"
 draft: true
 ---
+
+![GPT-6 Astra for .NET: What Changes in the API, and Where the SDK Hasn't Caught Up – by Adrian Bailador Panero](Astra.png)
 
 OpenAI released GPT-6 Astra on September 3, 2026 — described as a "new capability level" for computer use, browsing, coding, and long-running agentic work. It's rolling out in phases: first to a limited set of companies in OpenAI's Daybreak cybersecurity program, then to ChatGPT Plus/Pro/Business/Enterprise, the OpenAI API, Microsoft Foundry (Azure), and AWS Bedrock.
 
