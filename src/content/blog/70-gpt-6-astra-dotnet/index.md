@@ -8,7 +8,7 @@ draft: true
 
 OpenAI released GPT-6 Astra on September 3, 2026 — described as a "new capability level" for computer use, browsing, coding, and long-running agentic work. It's rolling out in phases: first to a limited set of companies in OpenAI's Daybreak cybersecurity program, then to ChatGPT Plus/Pro/Business/Enterprise, the OpenAI API, Microsoft Foundry (Azure), and AWS Bedrock.
 
-Announcement posts don't tell you what actually breaks when you point your .NET code at a new model ID. So I did what I did for [Claude Fable 5](/blog/67-claude-fable-5-dotnet-evaluation) a few weeks back: checked the model's real API contract against OpenAI's live docs, then installed the actual `OpenAI` NuGet package — version 2.13.0, whatever `dotnet add package OpenAI` gives you today — and inspected what it actually exposes, rather than trusting a blog post's code sample. The gap between the two turned out to be the most useful part of this post.
+Announcement posts don't tell you what actually breaks when you point your .NET code at a new model ID. So I did what I did for [Claude Fable 5](/blog/67-claude-fable-5-dotnet-evaluation) a few weeks back: checked the model's real API contract against OpenAI's live docs, then installed the actual `OpenAI` NuGet package (version 2.13.0, whatever `dotnet add package OpenAI` gives you today) and inspected what it actually exposes, rather than trusting a blog post's code sample. The gap between the two turned out to be the most useful part of this post.
 
 ## Code
 
@@ -62,11 +62,11 @@ var response = await client.GetResponseAsync(
 Console.WriteLine(response);
 ```
 
-`OpenAIClientExtensions.AsIChatClient(this ChatClient)` has no `[Experimental]` attribute on it either. This is the shape to reach for when Astra is just answering questions — no tools involved.
+`OpenAIClientExtensions.AsIChatClient(this ChatClient)` has no `[Experimental]` attribute on it either. This is the shape to reach for as long as Astra is just answering questions, not calling any tools.
 
 One packaging gotcha worth knowing before you add both: `Microsoft.Extensions.AI.OpenAI` 10.9.0 declares a dependency on `OpenAI >= 2.12.0 && < 2.13.0`. `dotnet add package OpenAI` on its own resolves to 2.13.0, one patch outside that range — add both packages the naive way and you'll get an `NU1608` warning about a version outside the dependency constraint. It still restores and builds, but it's worth pinning the `OpenAI` version explicitly if you want a clean restore log.
 
-That "no tools involved" caveat isn't a small one. OpenAI's own release notes for Astra say it plainly: tool calling requires the Responses API, and if you're already calling tools through Chat Completions against another model, there's a dedicated migration guide for moving that to Responses. For Astra specifically, function calling, web search, file search, code interpreter, computer use, and MCP all live on the client that's still gated behind `OPENAI001` — the stable client answers questions, the experimental one is where the agentic behavior actually lives.
+That caveat about not calling tools isn't a small one. OpenAI's own release notes for Astra say it plainly: tool calling requires the Responses API, and if you're already calling tools through Chat Completions against another model, there's a dedicated migration guide for moving that to Responses. For Astra specifically, function calling, web search, file search, code interpreter, computer use, and MCP all live on the client that's still gated behind `OPENAI001` — the stable client answers questions, the experimental one is where the agentic behavior actually lives.
 
 ### The experimental path: Responses API
 
