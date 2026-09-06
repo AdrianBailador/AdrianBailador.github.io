@@ -12,7 +12,7 @@ Announcement posts don't tell you what actually breaks when you point your .NET 
 
 ## Code
 
-The three examples below are runnable end to end in a companion repo: [gpt-6-astra-dotnet](https://github.com/AdrianBailador/gpt-6-astra-dotnet) — one mode per client shape (`chat`, `meai`, `responses`), same prompt in all three, so the only thing that changes between runs is the code path.
+The three examples below are runnable end to end in a companion repo: [gpt-6-astra-dotnet](https://github.com/AdrianBailador/gpt-6-astra-dotnet) — one mode per client shape (`chat`, `meai`, `responses`), same prompt in all three. `meai` also sets reasoning effort through the higher-level abstraction covered later in this post, so it isn't a strict like-for-like comparison with the other two; the repo's README says exactly what each mode runs.
 
 ## What's actually in the model
 
@@ -80,7 +80,7 @@ ResponsesClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"
 
 ResponseResult result = await client.CreateResponseAsync(
     "gpt-6-astra",
-    "Plan a zero-downtime migration for a 200-table SQL Server database.",
+    "Refactor the DbContext lifetime across every endpoint in this project.",
     previousResponseId: null);
 
 Console.WriteLine(result.GetOutputText());
@@ -92,7 +92,7 @@ For anything beyond the three-string convenience overload (tools, reasoning opti
 ResponseResult result = await client.CreateResponseAsync(new CreateResponseOptions
 {
     Model = "gpt-6-astra",
-    InputItems = { ResponseItem.CreateUserMessageItem("Plan a zero-downtime migration for a 200-table SQL Server database.") },
+    InputItems = { ResponseItem.CreateUserMessageItem("Refactor the DbContext lifetime across every endpoint in this project.") },
     ReasoningOptions = new ResponseReasoningOptions
     {
         ReasoningEffortLevel = ResponseReasoningEffortLevel.High,
