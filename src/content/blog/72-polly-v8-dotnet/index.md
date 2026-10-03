@@ -4,7 +4,6 @@ summary: "Polly v8 didn't just add features to the v7 fluent policy API. It repl
 date: "2026-10-03"
 tags: ["dotnet", "csharp", "polly", "resilience", "testing"]
 heroImage: "hero.png"
-draft: true
 ---
 
 ![Polly v8 Rewrote Itself From Scratch. Here's What Actually Changed – by Adrian Bailador Panero](hero.png)
