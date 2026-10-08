@@ -1,0 +1,87 @@
+<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="1200" height="520" fill="#ffffff"/>
+
+  <text x="40" y="46" font-size="24" font-weight="700" fill="#111111">Where the BOLA Check Sits in the Request Pipeline</text>
+  <text x="40" y="70" font-size="14" fill="#666666">Two independent object-level gates — one structural, one explicit — on either side of the fetch</text>
+
+  <!-- Row 1 -->
+  <rect x="40" y="110" width="250" height="64" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.2"/>
+  <text x="165" y="136" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">Client Request</text>
+  <text x="165" y="156" font-size="12" fill="#555555" text-anchor="middle" font-family="Menlo, Consolas, monospace">GET /api/invoices/4821</text>
+
+  <rect x="316" y="110" width="250" height="64" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.2"/>
+  <text x="441" y="136" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">AuthN Middleware</text>
+  <text x="441" y="156" font-size="12" fill="#555555" text-anchor="middle">Who is this?</text>
+
+  <rect x="592" y="110" width="250" height="64" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.2"/>
+  <text x="717" y="136" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">Policy Authorization</text>
+  <text x="717" y="156" font-size="12" fill="#555555" text-anchor="middle">Billing.Read claim?</text>
+
+  <rect x="868" y="110" width="250" height="64" rx="10" fill="#000000" fill-opacity="0.06" stroke="#000000" stroke-opacity="0.3"/>
+  <text x="993" y="136" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">EF Core Query Filter</text>
+  <text x="993" y="156" font-size="12" fill="#555555" text-anchor="middle">scoped to TenantId</text>
+
+  <rect x="1038" y="86" width="72" height="20" rx="10" fill="#000000" fill-opacity="0.07" stroke="#000000" stroke-opacity="0.35"/>
+  <text x="1074" y="100" font-size="10" font-weight="700" fill="#111111" text-anchor="middle">LAYER 1</text>
+
+  <!-- Row 1 arrows -->
+  <line x1="290" y1="142" x2="308" y2="142" stroke="#111111" stroke-width="2"/>
+  <polygon points="316,142 304,136 304,148" fill="#111111"/>
+
+  <line x1="566" y1="142" x2="584" y2="142" stroke="#111111" stroke-width="2"/>
+  <polygon points="592,142 580,136 580,148" fill="#111111"/>
+
+  <line x1="842" y1="142" x2="860" y2="142" stroke="#111111" stroke-width="2"/>
+  <polygon points="868,142 856,136 856,148" fill="#111111"/>
+
+  <!-- Bypass branch: Policy Authorization -> batch/export endpoint -->
+  <line x1="717" y1="174" x2="717" y2="186" stroke="#111111" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <polygon points="717,193 711,183 723,183" fill="#111111"/>
+  <text x="726" y="184" font-size="10" fill="#777777">batch / export</text>
+
+  <!-- Bypass box -->
+  <rect x="592" y="193" width="250" height="52" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.2" stroke-dasharray="4,3"/>
+  <text x="717" y="215" font-size="13" font-weight="700" fill="#111111" text-anchor="middle">Batch / Export Endpoint</text>
+  <text x="717" y="233" font-size="11" fill="#777777" text-anchor="middle" font-family="Menlo, Consolas, monospace">.IgnoreQueryFilters()</text>
+
+  <line x1="717" y1="245" x2="717" y2="253" stroke="#111111" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <polygon points="717,260 711,250 723,250" fill="#111111"/>
+
+  <!-- Row 1 -> Row 2 connector -->
+  <line x1="993" y1="174" x2="993" y2="252" stroke="#111111" stroke-width="2"/>
+  <polygon points="993,260 987,248 999,248" fill="#111111"/>
+
+  <!-- Row 2 -->
+  <rect x="868" y="260" width="250" height="64" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.2"/>
+  <text x="993" y="286" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">Resource Fetched</text>
+  <text x="993" y="306" font-size="12" fill="#555555" text-anchor="middle">single invoice, by id</text>
+
+  <line x1="868" y1="292" x2="850" y2="292" stroke="#111111" stroke-width="2"/>
+  <polygon points="842,292 854,286 854,298" fill="#111111"/>
+
+  <rect x="592" y="260" width="250" height="64" rx="10" fill="#000000" fill-opacity="0.06" stroke="#000000" stroke-opacity="0.3"/>
+  <text x="717" y="286" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">IAuthorizationService</text>
+  <text x="717" y="306" font-size="12" fill="#555555" text-anchor="middle">same tenant as resource?</text>
+
+  <rect x="512" y="282" width="72" height="20" rx="10" fill="#000000" fill-opacity="0.07" stroke="#000000" stroke-opacity="0.35"/>
+  <text x="548" y="296" font-size="10" font-weight="700" fill="#111111" text-anchor="middle">LAYER 2</text>
+
+  <!-- Branch to outcomes -->
+  <line x1="700" y1="324" x2="604" y2="402" stroke="#111111" stroke-width="2"/>
+  <polygon points="593,409 601,397 609,407" fill="#111111"/>
+  <text x="615" y="368" font-size="11" fill="#555555">succeeded</text>
+
+  <line x1="734" y1="324" x2="828" y2="402" stroke="#111111" stroke-width="2"/>
+  <polygon points="839,409 827,407 833,397" fill="#111111"/>
+  <text x="790" y="368" font-size="11" fill="#555555" text-anchor="end">failed</text>
+
+  <rect x="480" y="410" width="210" height="60" rx="10" fill="#000000" fill-opacity="0.03" stroke="#000000" stroke-opacity="0.25"/>
+  <text x="585" y="438" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">200 OK</text>
+  <text x="585" y="456" font-size="12" fill="#555555" text-anchor="middle">tenant matches</text>
+
+  <rect x="744" y="410" width="210" height="60" rx="10" fill="#000000" fill-opacity="0.07" stroke="#000000" stroke-opacity="0.4"/>
+  <text x="849" y="438" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">403 Forbidden</text>
+  <text x="849" y="456" font-size="12" fill="#555555" text-anchor="middle">tenant mismatch</text>
+
+  <text x="40" y="500" font-size="12" fill="#777777">Solid = normal single-object request · Dashed = batch/export path (layer 1 bypassed, layer 2 still enforced)</text>
+</svg>
