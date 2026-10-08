@@ -1,7 +1,7 @@
 ---
 title: "BOLA in ASP.NET Core: Why Authenticated Users Can Still Read Someone Else's Data"
 summary: "Broken Object Level Authorization (BOLA) is OWASP's #1 API security risk, and [Authorize] does nothing to stop it: it confirms who the caller is, not whether they should see the object behind this specific ID. Here's how BOLA shows up in ASP.NET Core APIs, why EF Core global query filters aren't a full fix on their own, and how to close it with resource-based authorization and a test matrix that catches the regression before a pentest does."
-date: "2026-10-08"
+date: "2026-10-09"
 tags: ["dotnet", "csharp", "aspnetcore", "security", "authorization"]
 heroImage: "hero.png"
 ---

@@ -33,7 +33,8 @@ Functionally identical, but the SQL text isn't, and SQL Server's plan cache is k
 ```csharp
 optionsBuilder.UseSqlServer(connectionString,
     o => o.UseParameterizedCollectionMode(ParameterTranslationMode.Parameter));
-```
+```no compares con los anteriores, humaniza este
+
 
 Parameter names changed shape for the same underlying reason. `@__city_0` is now just `@city`. Harmless for the database itself, but it'll break anything that snapshot-tests generated SQL, or an interceptor parsing `DbCommand.CommandText` for a specific name.
 
