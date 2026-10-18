@@ -210,7 +210,13 @@ app.MapGet("/users/{id:int}", (int id) =>
 ```
 
 ```json
-{"id":42,"name":"Jane Doe","email":"jane.doe@example.com","ssn":"078-05-1120","address":{"street":"1 Market St","city":"Dublin","postalCode":"D02 AF30"}}
+{
+  "id": 42,
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "ssn": "078-05-1120",
+  "address": { "street": "1 Market St", "city": "Dublin", "postalCode": "D02 AF30" }
+}
 ```
 
 `plainOptions` is a default `JsonSerializerOptions`. The database column was encrypted. This response isn't — and it's the response, not the column, that ends up in a browser dev tools tab, a support ticket attachment, or a Slack message.
@@ -225,7 +231,17 @@ app.MapGet("/secure/users/{id:int}", (int id) =>
 ```
 
 ```json
-{"id":42,"name":"Jane Doe","email":"RiWPxVsYwFpr9y7O/ObDdAGoW31inngQR3LslYlfm12AKw/PdyGj2C2lAJXTXlUh","ssn":"nKvWH5Ylan1hNIPt10yvsiuHI4ONS8u0Z0mZsYiS2dUaJwFkKTEB","address":{"street":"1 Market St","city":"Dublin","postalCode":"se4eSO+KdhIvlWCdMwdSqlbj4Ws3IyOdU7rEZB7yTMBi3+jU"}}
+{
+  "id": 42,
+  "name": "Jane Doe",
+  "email": "RiWPxVsYwFpr9y7O/ObDdAGoW31inngQR3LslYlfm12AKw/PdyGj2C2lAJXTXlUh",
+  "ssn": "nKvWH5Ylan1hNIPt10yvsiuHI4ONS8u0Z0mZsYiS2dUaJwFkKTEB",
+  "address": {
+    "street": "1 Market St",
+    "city": "Dublin",
+    "postalCode": "se4eSO+KdhIvlWCdMwdSqlbj4Ws3IyOdU7rEZB7yTMBi3+jU"
+  }
+}
 ```
 
 Same `User`, same `Address`, same handler — `encryptedOptions` is the only difference. `Name`, `Street`, and `City` stay readable because nothing marked them `[Encrypted]`; `Email`, `Ssn`, and the nested `Address.PostalCode` don't, including inside the nested object, without a separate converter for `Address`.
