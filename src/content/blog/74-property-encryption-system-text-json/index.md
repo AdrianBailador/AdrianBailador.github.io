@@ -6,6 +6,8 @@ tags: ["dotnet", "csharp", "security", "systemtextjson", "encryption"]
 heroImage: "hero.png"
 ---
 
+![Your Database Column Is Encrypted. Your JSON Response Isn't. – by Adrian Bailador Panero](hero.png)
+
 ## Code
 
 Full runnable demo, with tests: [stj-property-encryption-dotnet](https://github.com/AdrianBailador/stj-property-encryption-dotnet).
