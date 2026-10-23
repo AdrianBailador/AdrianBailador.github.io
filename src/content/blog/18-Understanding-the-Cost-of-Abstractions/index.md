@@ -2,7 +2,7 @@
 title: "Understanding the Cost of Abstractions in .NET"
 summary: "Abstractions make our code elegant and modular — but they're not free. In this article, we explore how some common abstractions in .NET can hurt performance if used carelessly, and how to avoid the hidden costs."
 date: "2025-05-22"
-tags: [".NET", "Performance", "Abstractions", "Optimisation"]
+tags: [".NET", "performance", "Abstractions", "Optimisation"]
 ---
 
 ![Abstractions](Abstraction.png)

@@ -2,7 +2,7 @@
 title: "Semantic Search with .NET Core and AI: Build Your Smart API from Scratch"
 summary: "Learn how to build a smart API with .NET Core, SQLite, and OpenAI to perform semantic search using embeddings. A practical guide for beginners who want to integrate AI into real-world applications."
 date: "2025-08-04"
-tags: [".NET", ".NET Core", "Semantic Search", "AI", "OpenAI", "Embeddings", "SQLite", "C#", "Beginner"]
+tags: [".NET", ".NET Core", "Semantic Search", "ai", "openai", "Embeddings", "SQLite", "C#", "Beginner"]
 ---
 
 ![Implementing Semantic Search in .NET Core with Embeddings and AI – by Adrián Bailador Panero](Embedding.png)

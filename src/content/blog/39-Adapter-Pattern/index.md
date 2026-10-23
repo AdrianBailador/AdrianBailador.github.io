@@ -2,7 +2,7 @@
 title: "Adapter Pattern Explained with Real Examples"
 summary: "Learn the Adapter Pattern through practical .NET examples: payment gateways, logging systems, and legacy code integration. Understand when and how to use this essential structural design pattern."
 date: "2025-12-07"
-tags: ["C#", ".NET", "Design Patterns", "Adapter Pattern", "SOLID", "Architecture", "Refactoring", "Best Practices", "Gang of Four", "Structural Patterns"]
+tags: ["C#", ".NET", "Design Patterns", "Adapter Pattern", "SOLID", "architecture", "refactoring", "Best Practices", "Gang of Four", "Structural Patterns"]
 ---
 
 ![Adapter Pattern Explained with Real Examples – by Adrian Bailador Panero](AdapterPattern.png)

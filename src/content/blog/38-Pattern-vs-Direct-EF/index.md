@@ -2,7 +2,7 @@
 title: "Repository Pattern vs Direct EF Core: The Great Debate"
 summary: "Should you use the Repository Pattern or work directly with DbContext? Explore both approaches with practical examples, performance benchmarks, and real-world scenarios to make the right choice for your .NET projects."
 date: "2025-11-29"
-tags: ["C#", ".NET", "Entity Framework Core", "Repository Pattern", "DbContext", "Design Patterns", "Architecture", "Performance", "Testing", "Best Practices", "ASP.NET Core", "Database", "CRUD", "Domain-Driven Design"]
+tags: ["C#", ".NET", "Entity Framework Core", "Repository Pattern", "DbContext", "Design Patterns", "architecture", "performance", "testing", "Best Practices", "ASP.NET Core", "database", "CRUD", "Domain-Driven Design"]
 ---
 
 ![Repository Pattern vs Direct EF Core: The Great Debate – by Adrian Bailador Panero](PatternvsDirect.png)

@@ -2,7 +2,7 @@
 title: "Core-Driven Architecture: Structuring Business Logic for Maintainable and Scalable .NET Applications"
 summary: "Explore Core-Driven Architecture to keep your business domain isolated and clean. Learn how to build maintainable, scalable, and testable .NET applications by focusing on core business logic and clear separation of concerns."
 date: "2025-06-08"
-tags: [".NET", "Architecture", "Clean Code", "Design Patterns", "Domain-Driven Design", "C#"]
+tags: [".NET", "architecture", "Clean Code", "Design Patterns", "Domain-Driven Design", "C#"]
 ---
 
 ---

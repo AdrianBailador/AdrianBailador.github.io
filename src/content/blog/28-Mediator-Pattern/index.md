@@ -2,7 +2,7 @@
 title: "Applying the Mediator Pattern in ASP.NET Core with MediatR"
 summary: "Decouple your ASP.NET Core applications using the Mediator pattern and MediatR. This guide shows how to structure your code for maintainability, testability, and clean architecture with real-world examples and pipeline behaviours."
 date: "2025-07-27"
-tags: [".NET", "ASP.NET Core", "MediatR", "Design Patterns", "Clean Architecture", "Dependency Injection", "C#"]
+tags: [".NET", "ASP.NET Core", "mediatr", "Design Patterns", "Clean Architecture", "Dependency Injection", "C#"]
 ---
 
 ![Applying the Mediator Pattern in ASP.NET Core with MediatR – by Adrián Bailador Panero](MediatorPattern.png)

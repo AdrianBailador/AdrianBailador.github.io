@@ -2,7 +2,7 @@
 title: "Building AI-Ready Applications with Model Context Protocol in C#"
 summary: "Learn how to build MCP servers and clients in C# using the official SDK, and connect your .NET applications with AI models in a standard, scalable way."
 date: "2025-12-22"
-tags: ["C#", ".NET", "MCP", "Model Context Protocol", "AI", "LLM", "Anthropic", "Microsoft", "SDK", "Visual Studio Code", "GitHub Copilot"]
+tags: ["C#", ".NET", "MCP", "Model Context Protocol", "ai", "llm", "anthropic", "Microsoft", "SDK", "Visual Studio Code", "GitHub Copilot"]
 ---
 
 ![TBuilding AI-Ready Applications with Model Context Protocol in C# – by Adrian Bailador Panero](MCP.png)

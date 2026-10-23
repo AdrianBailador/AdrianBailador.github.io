@@ -2,7 +2,7 @@
 title: "Rate Limiting in ASP.NET Core – Protect Your APIs Like a Pro"
 summary: "Learn how to implement rate limiting in ASP.NET Core to protect your APIs from abuse, DDoS attacks, and excessive usage. Includes native .NET 7+ features, custom implementations, Redis distributed scenarios, and benchmarks."
 date: "2025-08-24"
-tags: [".NET", "ASP.NET Core", "Rate Limiting", "Security", "Performance", "C#", "Redis", "API Protection"]
+tags: [".NET", "ASP.NET Core", "Rate Limiting", "security", "performance", "C#", "redis", "API Protection"]
 ---
 
 ![Rate Limiting in ASP.NET Core – by Adrián Bailador Panero](RateLimiting.png)

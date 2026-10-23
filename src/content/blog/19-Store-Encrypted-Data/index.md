@@ -2,7 +2,7 @@
 title: "Store Encrypted Data in Your Database Using .NET – Secure and Efficient"
 summary: "Protecting sensitive data is a critical requirement in any modern application. Whether it’s personal information, passwords, or API keys, we must ensure that stored data isn’t left in plain text in case of a breach."
 date: "2025-05-25"
-tags: [".NET", "Security", "Encryption", "EF Core", "Best Practices", "SQLite"]
+tags: [".NET", "security", "encryption", "EF Core", "Best Practices", "SQLite"]
 
 ---
 

@@ -2,7 +2,7 @@
 title: "Avoiding Indexed Access in .NET: Safer and Faster Alternatives for Production Code"
 summary: "Accessing elements by index is fast but risky in production .NET code. Learn safer and more expressive alternatives to avoid runtime exceptions, fragile logic, and unclear intent. Includes benchmarks, real-world examples, and a diagram."
 date: "2025-06-04"
-tags: [".NET", "Performance", "Best Practices", "Code Quality", "C#", "BenchmarkDotNet"]
+tags: [".NET", "performance", "Best Practices", "Code Quality", "C#", "BenchmarkDotNet"]
 ---
 
 

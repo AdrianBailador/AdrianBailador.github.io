@@ -2,7 +2,7 @@
 title: "IAsyncEnumerable<T> in C#: Streaming Data Without Loading Everything into Memory"
 summary: "Master IAsyncEnumerable to handle large datasets efficiently. Learn production patterns with Entity Framework, HttpClient streaming, and real performance comparisons."
 date: 2026-04-05
-tags: ["C#", ".NET", "IAsyncEnumerable", "Performance", "Entity Framework", "Async Streaming"]
+tags: ["C#", ".NET", "IAsyncEnumerable", "performance", "Entity Framework", "Async Streaming"]
 ---
 
 ![IAsyncEnumerable<T> in C#: Streaming Data Without Loading Everything into Memory – by Adrian Bailador Panero](IAsyncEnumerable.png)

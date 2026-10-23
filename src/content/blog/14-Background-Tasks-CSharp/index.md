@@ -3,7 +3,7 @@
 title: Background Tasks in C# 🧵
 summary: "In modern applications, especially web and desktop apps, executing long-running tasks on the main thread can block user interactions or degrade performance. That’s where background tasks come in."
 date: "2025-05-09"
-tags: ["ASP.NET Core", "Background Tasks", "Queue", "IHostedService", "Channel", ".NET", "Concurrency", "Scalability"]
+tags: ["ASP.NET Core", "Background Tasks", "Queue", "IHostedService", "Channel", ".NET", "concurrency", "scalability"]
 
 
 ---

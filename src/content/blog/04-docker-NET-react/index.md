@@ -7,7 +7,7 @@ tags:
 - C#
 - .NET
 - React
-- Docker
+- docker
 ---
 
 ## **Step 1: Install Docker**

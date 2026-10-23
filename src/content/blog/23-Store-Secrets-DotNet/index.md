@@ -2,7 +2,7 @@
 title: "How to Store Secrets Securely in .NET: Environment Variables, AppSettings, User Secrets and More"
 summary: "Learn the best practices to handle secrets in .NET applications using environment variables, user secrets, configuration files, and Azure Key Vault. Keep your credentials safe and your architecture clean."
 date: "2025-06-14"
-tags: [".NET", "Security", "Configuration", "DevOps", "C#", "Azure"]
+tags: [".NET", "security", "Configuration", "devops", "C#", "azure"]
 ---
 
 ![How to Store Secrets Securely in .NET – by Adrián Bailador Panero](Secrets.png)

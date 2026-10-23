@@ -2,7 +2,7 @@
 title: "Types of Unit Tests in C# – Master Testing Like a Pro"
 summary: "Complete guide to unit testing in C#. Learn all types of tests: basic unit tests, mocks, parametrised tests, async testing, property-based testing, and best practices. Includes practical examples with xUnit, NUnit, Moq, and advanced techniques."
 date: "2025-09-21"
-tags: ["C#", ".NET", "Unit Testing", "TDD", "xUnit", "NUnit", "Moq", "Testing", "Software Quality", "Best Practices"]
+tags: ["C#", ".NET", "Unit Testing", "tdd", "xUnit", "NUnit", "Moq", "testing", "Software Quality", "Best Practices"]
 ---
 
 ![Types of Unit Tests in C# – by Adrián Bailador Panero](test.png)

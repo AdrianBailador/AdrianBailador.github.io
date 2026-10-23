@@ -2,7 +2,7 @@
 title: "Database Indexing in .NET with EF Core – Boost Your Query Performance"
 summary: "Learn how to improve query performance in your .NET applications using database indexing with Entity Framework Core. Includes examples with Fluent API, Data Annotations, migrations, and a benchmark."
 date: "2025-08-18"
-tags: [".NET", "EF Core", "Database", "Indexing", "Performance", "C#", "SQLite"]
+tags: [".NET", "EF Core", "database", "Indexing", "performance", "C#", "SQLite"]
 ---
 
 ![Implementing Database Indexing in EF Core – by Adrián Bailador Panero](DatabaseIndexing.png)

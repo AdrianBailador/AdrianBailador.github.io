@@ -7,9 +7,9 @@ tags:
 - .NET
 - C#
 - .NET Core
-- SQL
-- Dapper
-- Database
+- sql
+- dapper
+- database
 
 
 

@@ -3,7 +3,7 @@
 title: "DDD in .NET: Modelling Rich and Meaningful Domains"
 summary: "Learn how to apply Domain-Driven Design in .NET to create expressive, maintainable, and business-focused domain models. Includes practical examples with Value Objects, Aggregates, Repositories, and tests."
 date: "2025-06-28"
-tags: [".NET", "DDD", "Architecture", "Software Design", "Clean Code", "Domain-Driven Design"]
+tags: [".NET", "ddd", "architecture", "Software Design", "Clean Code", "Domain-Driven Design"]
 ---
 
 ![DDD in .NET – by Adrián Bailador Panero](DDD.png)

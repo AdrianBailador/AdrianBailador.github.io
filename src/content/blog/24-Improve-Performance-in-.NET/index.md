@@ -2,7 +2,7 @@
 title: "How to Measure and Improve Performance in .NET"
 summary: "A practical guide to diagnosing and optimising .NET applications in real-world environments. Learn what to measure, which tools to use, and the best practices for making .NET applications faster, more predictable, and more resilient."
 date: "2025-06-21"
-tags: [".NET", "Performance", "Optimization", "Diagnostics", "C#"]
+tags: [".NET", "performance", "optimization", "Diagnostics", "C#"]
 ---
 
 

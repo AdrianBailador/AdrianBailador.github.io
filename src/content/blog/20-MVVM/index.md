@@ -2,7 +2,7 @@
 title: "MVVM in .NET"
 summary: "MVVM is a powerful architectural pattern used in .NET desktop applications like WPF, MAUI, and WinUI. In this article, we break down the pattern with a practical example, a diagram, its pros and cons, and step-by-step instructions to build it in Visual Studio Code."
 date: "2025-06-01"
-tags: [".NET", "MVVM", "WPF", "Architecture", "CommunityToolkit"]
+tags: [".NET", "MVVM", "WPF", "architecture", "CommunityToolkit"]
 ---
 
 ![MVVM in .NET – by Adrián Bailador Panero](MVVM.png)

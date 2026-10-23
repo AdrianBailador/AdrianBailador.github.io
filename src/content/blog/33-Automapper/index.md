@@ -2,7 +2,7 @@
 title: "AutoMapper: Mastering Complex Mappings in C#"
 summary: "Complete guide to AutoMapper in C#. Learn advanced mapping techniques: nested mappings, custom resolvers, value converters, projection with Entity Framework, testing strategies, performance optimisation, and common pitfalls. Includes practical examples and best practices."
 date: "2025-09-29"
-tags: ["C#", ".NET", "AutoMapper", "Object Mapping", "Entity Framework", "Performance", "Testing", "Best Practices", "Design Patterns", "Clean Code"]
+tags: ["C#", ".NET", "AutoMapper", "Object Mapping", "Entity Framework", "performance", "testing", "Best Practices", "Design Patterns", "Clean Code"]
 ---
 
 ![AutoMapper: Mastering Complex Mappings in C# – by Adrián Bailador Panero](automapper.png)

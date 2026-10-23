@@ -2,7 +2,7 @@
 title: "Detecting Missing Migrations in EF Core: A Guide for .NET Developers"
 summary: "Avoid database drift and deployment surprises by learning how to detect and prevent missing migrations in Entity Framework Core. Includes automated checks, runtime guards, and CI-friendly scripts."
 date: "2025-07-12"
-tags: [".NET", "Entity Framework Core", "Migrations", "Database", "Architecture", "Clean Code", "DevOps"]
+tags: [".NET", "Entity Framework Core", "Migrations", "database", "architecture", "Clean Code", "devops"]
 ---
 
 ![Detecting Missing Migrations in .NET – by Adrián Bailador Panero](DetectingMissingMigrations.png)

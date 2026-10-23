@@ -2,7 +2,7 @@
 title: "Build Your Local AI with C# and .NET "
 summary: "Learn to run artificial intelligence models completely offline with C# and .NET using llama.cpp and LLamaSharp. Control your data, avoid API costs, and build your own local assistant step by step."
 date: "2025-10-18"
-tags: ["C#", ".NET", "AI", "Offline", "llama.cpp", "LLamaSharp", "Mistral", "Llama 3", "AI Models", "ASP.NET Core", "Privacy", "Self-Hosted AI", "Open Source"]
+tags: ["C#", ".NET", "ai", "Offline", "llama.cpp", "LLamaSharp", "Mistral", "Llama 3", "AI Models", "ASP.NET Core", "Privacy", "Self-Hosted AI", "Open Source"]
 ---
 
 ![Build Your Local AI with C# and .NET  – by Adrián Bailador Panero](AI.png)
