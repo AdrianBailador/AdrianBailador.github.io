@@ -1,4 +1,4 @@
-import type { Site, Page, Links, Socials, Giscus } from "@types"
+import type { Site, Page, Links, Socials, Giscus, Newsletter } from "@types"
 
 // Global
 export const SITE: Site = {
@@ -103,5 +103,11 @@ export const GISCUS: Giscus = {
   REPO_ID: "R_kgDOOMikUg",
   CATEGORY: "Announcements",
   CATEGORY_ID: "DIC_kwDOOMikUs4DEcU3",
+}
+
+// Email subscriptions (new post notifications)
+// Sign up at https://buttondown.com, then put your username below.
+export const NEWSLETTER: Newsletter = {
+  BUTTONDOWN_USERNAME: "",
 }
 

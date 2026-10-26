@@ -1,0 +1,46 @@
+---
+import { NEWSLETTER } from "@consts"
+
+const { BUTTONDOWN_USERNAME } = NEWSLETTER
+const isConfigured = Boolean(BUTTONDOWN_USERNAME)
+---
+
+{isConfigured && (
+  <div class="mt-16 pt-10 border-t border-black/10 dark:border-white/15">
+    <div class="p-4 sm:p-6 border rounded-lg border-black/15 dark:border-white/20">
+      <div class="text-sm uppercase text-black/60 dark:text-white/60">
+        Subscribe
+      </div>
+      <div class="font-semibold mt-2 text-black dark:text-white">
+        Get new posts by email
+      </div>
+      <p class="mt-2 text-sm text-black/70 dark:text-white/70">
+        No spam, unsubscribe anytime.
+      </p>
+      <form
+        action={`https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
+        method="post"
+        target="popupwindow"
+        onsubmit={`window.open('https://buttondown.com/${BUTTONDOWN_USERNAME}', 'popupwindow')`}
+        class="mt-4 flex flex-col sm:flex-row gap-3"
+      >
+        <label for="bd-email" class="sr-only">Email address</label>
+        <input
+          type="email"
+          name="email"
+          id="bd-email"
+          required
+          placeholder="you@example.com"
+          class="w-full px-3 py-2 rounded-lg bg-black/5 dark:bg-white/10 border border-black/15 dark:border-white/20 text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 blend"
+        />
+        <input type="hidden" value="1" name="embed" />
+        <button
+          type="submit"
+          class="shrink-0 px-4 py-2 rounded-lg bg-black text-white dark:bg-white dark:text-black font-medium hover:opacity-80 blend"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+)}

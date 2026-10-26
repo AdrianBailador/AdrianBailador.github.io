@@ -25,3 +25,7 @@ export type Giscus = {
   CATEGORY: string
   CATEGORY_ID: string
 }
+
+export type Newsletter = {
+  BUTTONDOWN_USERNAME: string
+}

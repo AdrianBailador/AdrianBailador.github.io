@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content"
 import Comments from "@components/Comments.astro"
+import Newsletter from "@components/Newsletter.astro"
 
 type Props = {
   entry: CollectionEntry<"blog"> | CollectionEntry<"projects">
@@ -56,5 +57,6 @@ const next = items[(index + 1) % items.length]
       </svg>
     </a>
   </div>
+  {collection === "blog" && <Newsletter />}
   {collection === "blog" && <Comments />}
 </div>
