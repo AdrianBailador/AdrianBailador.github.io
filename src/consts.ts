@@ -108,6 +108,6 @@ export const GISCUS: Giscus = {
 // Email subscriptions (new post notifications)
 // Sign up at https://buttondown.com, then put your username below.
 export const NEWSLETTER: Newsletter = {
-  BUTTONDOWN_USERNAME: "",
+  BUTTONDOWN_USERNAME: "adrianbailador",
 }
 
