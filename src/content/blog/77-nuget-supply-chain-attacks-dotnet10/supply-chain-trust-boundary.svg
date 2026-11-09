@@ -1,0 +1,75 @@
+<svg viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="1200" height="560" fill="#ffffff"/>
+
+  <text x="40" y="42" font-size="24" font-weight="700" fill="#111111">NuGet Supply Chain Trust Boundary</text>
+  <text x="40" y="66" font-size="14" fill="#666666">Same PackageReference, two configs, two outcomes — VictimApp vs. DefensiveApp</text>
+
+  <!-- Shared top box -->
+  <rect x="380" y="92" width="440" height="56" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.25"/>
+  <text x="600" y="114" font-size="12.5" font-family="Menlo, Consolas, monospace" fill="#111111" text-anchor="middle">&lt;PackageReference Include="EvilPkg.Benign" /&gt;</text>
+  <text x="600" y="134" font-size="12.5" fill="#555555" text-anchor="middle">added to the project in a routine PR</text>
+
+  <!-- Diverging lines -->
+  <line x1="560" y1="148" x2="280" y2="172" stroke="#111111" stroke-width="2"/>
+  <polygon points="280,172 293,166 289,178" fill="#111111"/>
+  <line x1="640" y1="148" x2="920" y2="172" stroke="#111111" stroke-width="2"/>
+  <polygon points="920,172 907,166 911,178" fill="#111111"/>
+
+  <!-- Column headers -->
+  <text x="260" y="168" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">VictimApp</text>
+  <text x="940" y="168" font-size="15" font-weight="700" fill="#111111" text-anchor="middle">DefensiveApp</text>
+
+  <!-- LEFT COLUMN -->
+  <rect x="100" y="184" width="320" height="70" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.3" stroke-dasharray="4 3"/>
+  <text x="260" y="206" font-size="13" font-weight="700" fill="#111111" text-anchor="middle">dotnet restore</text>
+  <text x="260" y="224" font-size="12" fill="#555555" text-anchor="middle">No packageSourceMapping —</text>
+  <text x="260" y="240" font-size="12" fill="#555555" text-anchor="middle">any source may satisfy any package ID</text>
+
+  <line x1="260" y1="254" x2="260" y2="278" stroke="#111111" stroke-width="2"/>
+  <polygon points="260,280 254,268 266,268" fill="#111111"/>
+
+  <rect x="100" y="282" width="320" height="56" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.25"/>
+  <text x="260" y="304" font-size="13" font-weight="700" fill="#111111" text-anchor="middle">Resolves EvilPkg.Benign</text>
+  <text x="260" y="322" font-size="12" fill="#555555" text-anchor="middle">from local-lab-feed</text>
+
+  <line x1="260" y1="338" x2="260" y2="362" stroke="#111111" stroke-width="2"/>
+  <polygon points="260,364 254,352 266,352" fill="#111111"/>
+
+  <rect x="100" y="366" width="320" height="70" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.25"/>
+  <text x="260" y="388" font-size="13" font-weight="700" fill="#111111" text-anchor="middle">dotnet build</text>
+  <text x="260" y="406" font-size="11.5" font-family="Menlo, Consolas, monospace" fill="#555555" text-anchor="middle">buildTransitive/EvilPkg.Benign.targets</text>
+  <text x="260" y="422" font-size="12" fill="#555555" text-anchor="middle">auto-imported — runs automatically</text>
+
+  <line x1="260" y1="436" x2="260" y2="458" stroke="#111111" stroke-width="2"/>
+  <polygon points="260,460 254,448 266,448" fill="#111111"/>
+
+  <rect x="100" y="462" width="320" height="76" rx="10" fill="#000000" fill-opacity="0.08" stroke="#000000" stroke-opacity="0.6" stroke-width="2"/>
+  <text x="260" y="486" font-size="14" font-weight="700" fill="#111111" text-anchor="middle">Runs with build-agent privileges</text>
+  <text x="260" y="504" font-size="12" fill="#333333" text-anchor="middle">env vars · CI secrets · source tree</text>
+  <text x="260" y="520" font-size="12" fill="#333333" text-anchor="middle">all reachable</text>
+
+  <!-- RIGHT COLUMN -->
+  <rect x="780" y="184" width="320" height="70" rx="10" fill="#000000" fill-opacity="0.04" stroke="#000000" stroke-opacity="0.3" stroke-dasharray="4 3"/>
+  <text x="940" y="206" font-size="13" font-weight="700" fill="#111111" text-anchor="middle">dotnet restore</text>
+  <text x="940" y="224" font-size="12" fill="#555555" text-anchor="middle">packageSourceMapping configured —</text>
+  <text x="940" y="240" font-size="12" fill="#555555" text-anchor="middle">no source has a pattern for this ID</text>
+
+  <line x1="940" y1="254" x2="940" y2="278" stroke="#111111" stroke-width="2"/>
+  <polygon points="940,280 934,268 946,268" fill="#111111"/>
+
+  <rect x="780" y="282" width="320" height="56" rx="10" fill="#000000" fill-opacity="0.06" stroke="#000000" stroke-opacity="0.5" stroke-width="2"/>
+  <text x="940" y="306" font-size="14" font-weight="700" fill="#111111" text-anchor="middle">error NU1100</text>
+  <text x="940" y="324" font-size="12" fill="#333333" text-anchor="middle">restore fails</text>
+
+  <line x1="940" y1="338" x2="940" y2="362" stroke="#111111" stroke-width="2"/>
+  <polygon points="940,364 934,352 946,352" fill="#111111"/>
+
+  <rect x="780" y="366" width="320" height="70" rx="10" fill="#000000" fill-opacity="0.08" stroke="#000000" stroke-opacity="0.7" stroke-width="2.5"/>
+  <text x="940" y="394" font-size="14" font-weight="700" fill="#111111" text-anchor="middle">Nothing executes</text>
+  <text x="940" y="412" font-size="12" fill="#333333" text-anchor="middle">dotnet build never runs</text>
+
+  <!-- Filler to balance the column -->
+  <rect x="780" y="462" width="320" height="76" rx="10" fill="none" stroke="#000000" stroke-opacity="0.15" stroke-dasharray="3 3"/>
+  <text x="940" y="494" font-size="12" fill="#999999" text-anchor="middle" font-style="italic">(pipeline already stopped —</text>
+  <text x="940" y="510" font-size="12" fill="#999999" text-anchor="middle" font-style="italic">nothing left to run)</text>
+</svg>
