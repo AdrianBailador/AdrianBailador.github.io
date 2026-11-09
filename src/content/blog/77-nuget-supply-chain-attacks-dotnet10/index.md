@@ -6,6 +6,8 @@ tags: ["dotnet", "csharp", "nuget", "supply-chain-security", "msbuild"]
 heroImage: "hero.png"
 ---
 
+![NuGet Supply Chain Attacks: How Malicious Packages Compromise Your .NET Build Pipeline (and How to Reduce the Risk) – by Adrian Bailador Panero](hero.png)
+
 ## Code
 
 Every claim below is backed by a test, not a blog-post assumption — the build-time execution PoC, the NU1100 failure from package source mapping, and the pre-populated-cache pitfall, each reproduced against the .NET 10 SDK in an isolated, self-cleaning copy of the repo: [nuget-supply-chain-defense-dotnet10](https://github.com/AdrianBailador/nuget-supply-chain-defense-dotnet10). 2 tests, 0 warnings. The PoC payload is intentionally harmless — it only writes a local marker file — and it's never published to nuget.org or any public feed. Read the repo's README for the scope and safety boundaries before you go digging through the code.
