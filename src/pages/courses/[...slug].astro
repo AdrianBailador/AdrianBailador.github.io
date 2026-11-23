@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content"
+import { Image } from "astro:assets"
 import PageLayout from "@layouts/PageLayout.astro"
 import TopLayout from "@layouts/TopLayout.astro"
 import ArticleTopLayout from "@layouts/ArticleTopLayout.astro"
@@ -18,16 +19,23 @@ export async function getStaticPaths() {
 
 type Props = CollectionEntry<"courses">
 const course = Astro.props
-const { title, summary, lessons } = course.data
+const { title, summary, lessons, date, heroImage } = course.data
 const { headings } = await render(course)
 const canonicalURL = new URL(`/courses/${course.id}`, Astro.site).href
 ---
 
-<PageLayout title={title} description={summary}>
+<PageLayout title={title} description={summary} image={heroImage?.src} ogType="article" publishedTime={date}>
   <ReadingProgress />
   <TopLayout>
     <div class="animate">
       <ArticleTopLayout entry={course} />
+      {heroImage && (
+        <Image
+          src={heroImage}
+          alt={title}
+          class="mt-6 w-full rounded-lg border border-black/10 dark:border-white/15"
+        />
+      )}
     </div>
   </TopLayout>
   <div class="flex-1 py-5">

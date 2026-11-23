@@ -3,6 +3,7 @@ title: "Software Architecture Fundamentals: Patterns, Styles, and Practices"
 summary: "A free, opinionated walkthrough of the architectural styles, patterns, and practices that actually show up in production .NET codebases — from monoliths to event-driven systems."
 date: "2026-11-23"
 tags: ["architecture", "clean-architecture", "ddd", "software-design"]
+heroImage: "hero.png"
 lessons:
   - title: "Clean Architecture: Explained and Reviewed"
     repoUrl: "https://github.com/AdrianBailador/clean-architecture-dotnet10"
