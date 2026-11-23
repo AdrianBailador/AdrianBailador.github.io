@@ -7,6 +7,7 @@ import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
 import ReadingProgress from "@components/ReadingProgress.astro"
 import TableOfContents from "@components/TableOfContents.astro"
 import SeriesNav from "@components/SeriesNav.astro"
+import AppPromo from "@components/AppPromo.astro"
 import { SITE } from "@consts"
 
 // Create the static blog pages
@@ -66,7 +67,8 @@ const seriesPosts = post.data.series
           )}
           <ArticleBottomLayout entry={post} />
         </div>
-        <aside class="hidden lg:block">
+        <aside class="hidden lg:block space-y-6">
+          <AppPromo variant="sidebar" />
           <TableOfContents headings={headings} variant="desktop" />
         </aside>
       </div>
