@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection, render } from "astro:content"
 import Comments from "@components/Comments.astro"
 import Newsletter from "@components/Newsletter.astro"
+import AppPromo from "@components/AppPromo.astro"
 
 type Props = {
   entry: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"courses">
@@ -59,6 +60,7 @@ const next = items[(index + 1) % items.length]
       </a>
     </div>
   )}
+  {collection === "blog" && <AppPromo />}
   {(collection === "blog" || collection === "courses") && <Newsletter />}
   {collection === "blog" && <Comments />}
 </div>

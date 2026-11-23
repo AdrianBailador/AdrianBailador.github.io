@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets"
+import coffeeTimerScreenshot from "../content/projects/project-16/screenshot.png"
+
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.thecoffeetimer.app&pcampaignid=web_share"
+---
+
+<div class="mt-16 pt-10 border-t border-black/10 dark:border-white/15">
+  <a
+    href={PLAY_STORE_URL}
+    target="_blank"
+    rel="noopener"
+    class="group block rounded-lg border border-black/15 dark:border-white/20 overflow-hidden hover:bg-black/5 hover:dark:bg-white/10 blend"
+  >
+    <Image
+      src={coffeeTimerScreenshot}
+      alt="The Coffee Timer app, a Pomodoro-style focus timer with task tracking and a productivity calendar"
+      class="w-full aspect-[1523/784] object-cover object-top"
+    />
+    <div class="p-4 sm:p-6">
+      <div class="text-sm uppercase text-black/60 dark:text-white/60">
+        My app
+      </div>
+      <div class="font-semibold mt-2 text-black dark:text-white group-hover:text-black group-hover:dark:text-white blend">
+        The Coffee Timer — now on Android
+      </div>
+      <p class="mt-2 text-sm text-black/70 dark:text-white/70">
+        The Pomodoro-style focus timer I built and use daily — task tracking, visual themes, and a productivity calendar, now in your pocket.
+      </p>
+      <img
+        src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+        alt="Get it on Google Play"
+        width="188"
+        height="56"
+        class="mt-4 h-14 w-auto"
+        loading="lazy"
+      />
+    </div>
+  </a>
+</div>
