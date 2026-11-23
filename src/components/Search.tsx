@@ -4,12 +4,12 @@ import Fuse from "fuse.js"
 import ArrowCard from "@components/ArrowCard"
 
 type Props = {
-  data: CollectionEntry<"blog">[]
+  data: (CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"courses">)[]
 }
 
 export default function Search({data}: Props) {
   const [query, setQuery] = createSignal("")
-  const [results, setResults] = createSignal<CollectionEntry<"blog">[]>([])
+  const [results, setResults] = createSignal<Props["data"]>([])
 
   const fuse = new Fuse(data, {
     keys: ["slug", "data.title", "data.summary", "data.tags"],

@@ -31,6 +31,12 @@ export const SEARCH: Page = {
   DESCRIPTION: "Search all posts and projects by keyword.",
 }
 
+// Courses Page
+export const COURSES: Page = {
+  TITLE: "Courses",
+  DESCRIPTION: "Free, self-paced courses on software architecture and design.",
+}
+
 // Links
 export const LINKS: Links = [
   { 
@@ -48,6 +54,10 @@ export const LINKS: Links = [
   {
     TEXT: "Series",
     HREF: "/series",
+  },
+  {
+    TEXT: "Courses",
+    HREF: "/courses",
   },
   {
     TEXT: "Projects",

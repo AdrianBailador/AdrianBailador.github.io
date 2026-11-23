@@ -1,0 +1,82 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import ArticleTopLayout from "@layouts/ArticleTopLayout.astro"
+import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
+import ReadingProgress from "@components/ReadingProgress.astro"
+import TableOfContents from "@components/TableOfContents.astro"
+import ShareButtons from "@components/ShareButtons.astro"
+
+export async function getStaticPaths() {
+	const courses = await getCollection("courses")
+	return courses.map((course) => ({
+		params: { slug: course.id },
+		props: course,
+	}))
+}
+
+type Props = CollectionEntry<"courses">
+const course = Astro.props
+const { title, summary, lessons } = course.data
+const { headings } = await render(course)
+const canonicalURL = new URL(`/courses/${course.id}`, Astro.site).href
+---
+
+<PageLayout title={title} description={summary}>
+  <ReadingProgress />
+  <TopLayout>
+    <div class="animate">
+      <ArticleTopLayout entry={course} />
+    </div>
+  </TopLayout>
+  <div class="flex-1 py-5">
+    <div class="w-full h-full mx-auto px-5 max-w-screen-lg">
+      <div class="animate grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-10">
+        <div>
+          <TableOfContents headings={headings} variant="mobile" />
+
+          <div class="mt-8 p-4 sm:p-5 border rounded-lg border-black/15 dark:border-white/20">
+            <div class="text-sm uppercase text-black/60 dark:text-white/60 mb-3">
+              Syllabus
+            </div>
+            <ol class="space-y-2">
+              {lessons.map((lesson, i) => (
+                <li class="flex items-center justify-between gap-3 text-sm">
+                  <span class="flex items-center gap-3 text-black dark:text-white">
+                    <span class="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-xs font-medium border border-black/20 dark:border-white/20 text-black/50 dark:text-white/50">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {lesson.title}
+                  </span>
+                  {lesson.repoUrl ? (
+                    <a
+                      href={lesson.repoUrl}
+                      target="_blank"
+                      class="shrink-0 text-xs px-2 py-1 rounded border border-black/20 dark:border-white/20 hover:bg-black/5 hover:dark:bg-white/10 blend"
+                    >
+                      Repo
+                    </a>
+                  ) : (
+                    <span class="shrink-0 text-xs text-black/30 dark:text-white/30">
+                      Soon
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div class="mt-8">
+            <ArticleBottomLayout entry={course} />
+          </div>
+
+          <ShareButtons title={title} url={canonicalURL} />
+        </div>
+        <aside class="hidden lg:block">
+          <TableOfContents headings={headings} variant="desktop" />
+        </aside>
+      </div>
+    </div>
+  </div>
+</PageLayout>

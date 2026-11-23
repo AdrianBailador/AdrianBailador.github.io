@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import Container from "@components/Container.astro"
+import { COURSES } from "@consts"
+
+const courses = (await getCollection("courses"))
+  .filter(course => !course.data.draft)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+---
+
+<PageLayout title={COURSES.TITLE} description={COURSES.DESCRIPTION}>
+  <TopLayout>
+    <div class="animate page-heading">
+      {COURSES.TITLE}
+    </div>
+  </TopLayout>
+
+  <BottomLayout>
+    <div class="animate">
+      <Container size="md">
+        <p class="text-black/60 dark:text-white/60 mb-10">
+          {COURSES.DESCRIPTION}
+        </p>
+        <div class="space-y-6">
+          {courses.map(course => (
+            <a
+              href={`/courses/${course.id}`}
+              class="group block p-5 border rounded-lg border-black/15 dark:border-white/20 hover:bg-black/5 hover:dark:bg-white/5 blend"
+            >
+              <div class="flex items-center justify-between gap-3">
+                <h2 class="font-semibold text-black dark:text-white group-hover:text-black group-hover:dark:text-white blend">
+                  {course.data.title}
+                </h2>
+                <span class="shrink-0 text-xs uppercase text-black/40 dark:text-white/40 tracking-widest">
+                  {course.data.lessons.length} lessons
+                </span>
+              </div>
+              <p class="mt-2 text-sm text-black/60 dark:text-white/60">
+                {course.data.summary}
+              </p>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </div>
+  </BottomLayout>
+</PageLayout>

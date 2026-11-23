@@ -1,0 +1,68 @@
+---
+type Props = {
+  title: string
+  url: string
+}
+
+const { title, url } = Astro.props
+const encodedUrl = encodeURIComponent(url)
+const encodedTitle = encodeURIComponent(title)
+
+const links = [
+  { name: "X", icon: "twitter-x", href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}` },
+  { name: "Bluesky", icon: "bluesky", href: `https://bsky.app/intent/compose?text=${encodedTitle}%20${encodedUrl}` },
+  { name: "WhatsApp", icon: "whatsapp", href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}` },
+  { name: "LinkedIn", icon: "linkedin", href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}` },
+]
+---
+
+<div class="mt-16 pt-10 border-t border-black/10 dark:border-white/15">
+  <div class="text-sm uppercase text-black/60 dark:text-white/60 mb-3">
+    Share
+  </div>
+  <div class="flex items-center gap-2 flex-wrap">
+    {links.map(link => (
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Share on ${link.name}`}
+        class="group size-10 flex items-center justify-center rounded-full border border-black/15 dark:border-white/20 hover:bg-black/5 hover:dark:bg-white/10 blend"
+      >
+        <svg class="size-5 fill-current group-hover:fill-black group-hover:dark:fill-white blend">
+          <use href={`/social.svg#${link.icon}`} />
+        </svg>
+      </a>
+    ))}
+    <button
+      type="button"
+      id="share-copy-link"
+      data-url={url}
+      aria-label="Copy link"
+      class="group size-10 flex items-center justify-center rounded-full border border-black/15 dark:border-white/20 hover:bg-black/5 hover:dark:bg-white/10 blend"
+    >
+      <svg class="size-4 fill-current group-hover:fill-black group-hover:dark:fill-white blend">
+        <use href="/ui.svg#link" />
+      </svg>
+    </button>
+    <span id="share-copy-feedback" class="text-xs text-black/50 dark:text-white/50 opacity-0 transition-opacity duration-300">
+      Copied!
+    </span>
+  </div>
+</div>
+
+<script>
+  const button = document.getElementById("share-copy-link")
+  const feedback = document.getElementById("share-copy-feedback")
+
+  button?.addEventListener("click", async () => {
+    const url = button.getAttribute("data-url") ?? window.location.href
+    try {
+      await navigator.clipboard.writeText(url)
+      feedback?.classList.remove("opacity-0")
+      setTimeout(() => feedback?.classList.add("opacity-0"), 1500)
+    } catch {
+      // Clipboard API unavailable (e.g. insecure context) — fail silently.
+    }
+  })
+</script>

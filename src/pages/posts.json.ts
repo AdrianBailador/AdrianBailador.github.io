@@ -4,6 +4,7 @@ import { getCollection } from "astro:content"
 export const GET: APIRoute = async () => {
   const posts = await getCollection("blog", p => !p.data.draft)
   const projects = await getCollection("projects", p => !p.data.draft)
+  const courses = await getCollection("courses", p => !p.data.draft)
 
   const items = [
     ...posts.map(p => ({
@@ -15,6 +16,11 @@ export const GET: APIRoute = async () => {
       titulo: p.data.title,
       resumen: p.data.summary,
       url: `/projects/${p.id.toLowerCase()}`,
+    })),
+    ...courses.map(p => ({
+      titulo: p.data.title,
+      resumen: p.data.summary,
+      url: `/courses/${p.id.toLowerCase()}`,
     })),
   ].sort((a, b) => a.titulo.localeCompare(b.titulo))
 
